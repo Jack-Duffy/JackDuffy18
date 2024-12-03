@@ -2,8 +2,8 @@ title: Nighthawk Pages
 description: "Class of 2025"
 owner_name: John Mortensen
 github_username: nighthawkcoders
-github_repo: "JackDuffy_2025" 
-baseurl: "/JackDuffy_2025"
+github_repo: "Jack-Duffy" 
+baseurl: "/Jack-Duffy"
 future: true
 remote_theme: jekyll/minima
 minima:
