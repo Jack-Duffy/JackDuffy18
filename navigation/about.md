@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About Jack Duffy
+title: About
 permalink: /about/
 ---
 -
