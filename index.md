@@ -8,7 +8,6 @@ hide: true
 # About Me 
 Not in About(idk why)
 
-### Favorite Things
 
 -
 
