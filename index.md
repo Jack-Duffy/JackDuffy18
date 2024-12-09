@@ -15,8 +15,8 @@ style="width:400px; height:auto;">
 
 This is my Dog Named Piper
 
-![alt text](images/Mountain.webp) alt="Description"
+<img src=(images/Mountain.webp) alt="Description"
 style="width:400px; height:auto;">
 
-![alt text](images/x2.jpeg) alt="Description"
+<img src=(images/x2.jpeg) alt="Description"
 style="width:400px; height:auto;">
