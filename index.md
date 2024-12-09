@@ -10,6 +10,8 @@ This is where I am going to add Games and other Interesting topics
 
 # Favorite Things
 
+-
+
 <img src="images/IMG_5269 copy.JPG" alt="Description"
 style="width:400px; height:auto;">
 
