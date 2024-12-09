@@ -5,7 +5,7 @@ description: Home Page
 hide: true
 ---
 
-#This is where I am going to add Games and other Interesting topics
+This is where I am going to add Games and other Interesting topics
 
 -
 -
