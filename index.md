@@ -5,10 +5,10 @@ description: Home Page
 hide: true
 ---
 -
+# About Me 
+Not in About(idk why)
 
-This is where I am going to add Games and other Interesting topics
-
-# Favorite Things
+### Favorite Things
 
 -
 
