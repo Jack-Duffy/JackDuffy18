@@ -15,3 +15,6 @@ style="width:400px; height:auto;">
 
 This is my Dog Named Piper
 
+![alt text](images/Mountain.webp)
+
+![alt text](images/x2.jpeg)
