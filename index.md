@@ -15,7 +15,7 @@ Not in About(Dont worry about it)
 style="width:400px; height:auto;">
 
 This is my Dog Named Piper, She is 8 years old and is a labradoodle.
-
+_
 <img src="images/Mountain.webp" alt="Description"
 style="width:400px; height:auto;">
 
@@ -27,4 +27,3 @@ style="width:400px; height:auto;">
 
 Another one of my favorite things is riding roller coasters my favorite roller coaster right now is X2 at <i>Six Flags Magic Mountain</i>.
 
-ouegpeiaubcai
