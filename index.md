@@ -6,7 +6,7 @@ hide: true
 ---
 -
 # About Me 
-Not in About(idk why)
+Not in About(Dont worry about it)
 
 
 -
