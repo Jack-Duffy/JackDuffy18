@@ -20,45 +20,59 @@ hide: true
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #333;
-            color: #fff;
+            background-color: #222;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            color: #fff;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .container {
+            position: relative;
+            width: 500px;
+            height: 600px;
+            background: #333;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
         }
         #home-page {
-            text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            height: 100%;
         }
-        #start-screen {
-            font-size: 32px;
-            font-weight: bold;
-            color: #4CAF50;
+        h1 {
+            font-size: 36px;
             margin-bottom: 20px;
+            color: #00FF00;
         }
-        #game-over, #win-screen {
+        p {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .game-container {
             display: none;
-            font-size: 24px;
-        }
-        #game-over {
-            color: #FF0000;
-        }
-        #win-screen {
-            color: #4CAF50;
-        }
-        #game {
             position: relative;
-            display: block;
-            width: 400px;
-            height: 400px;
-            background-color: #1c1c1c;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
+            width: 100%;
+            height: 100%;
         }
         .snake {
             position: absolute;
@@ -66,7 +80,7 @@ hide: true
             height: 20px;
             background-color: #00FF00;
             border-radius: 50%;
-            transition: all 0.2s ease;
+            transition: transform 0.2s ease-in-out;
         }
         .apple {
             position: absolute;
@@ -75,19 +89,26 @@ hide: true
             background-color: #FF5733;
             border-radius: 50%;
         }
-        .button {
-            padding: 10px 20px;
+        #game-over, #win-screen {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #fff;
+            text-align: center;
+            display: none;
+        }
+        #game-over {
+            color: #FF5733;
+        }
+        #win-screen {
+            color: #4CAF50;
+        }
+        .instructions {
             margin-top: 20px;
             font-size: 18px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .button:hover {
-            background-color: #45a049;
+            color: #ddd;
         }
         .hidden {
             display: none;
@@ -95,30 +116,39 @@ hide: true
     </style>
 </head>
 <body>
-    <div id="home-page">
-        <div id="start-screen">
-            <h1>Welcome to Advanced Snake Game!</h1>
-            <p>Use <strong>WASD</strong> to control the snake.</p>
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home-page">
+            <h1>Advanced Snake Game</h1>
+            <p>Use <strong>WASD</strong> keys to control the snake.</p>
             <button class="button" onclick="startGame()">Start Game</button>
+            <div class="instructions">
+                <p>Instructions:</p>
+                <p>1. Use <strong>W</strong> to move up</p>
+                <p>2. Use <strong>A</strong> to move left</p>
+                <p>3. Use <strong>S</strong> to move down</p>
+                <p>4. Use <strong>D</strong> to move right</p>
+            </div>
         </div>
 
-        <div id="game" class="hidden"></div>
-
-        <div id="game-over">
-            <p>Game Over! Click to Restart</p>
-            <button class="button" onclick="restartGame()">Restart</button>
-        </div>
-        <div id="win-screen">
-            <p>Congratulations! You Win! Click to Play Again</p>
-            <button class="button" onclick="startGame()">Play Again</button>
+        <!-- Game Area -->
+        <div class="game-container" id="game">
+            <div id="game-over">
+                <p>Game Over! Click to Restart</p>
+                <button class="button" onclick="restartGame()">Restart</button>
+            </div>
+            <div id="win-screen">
+                <p>Congratulations! You Win! Click to Play Again</p>
+                <button class="button" onclick="startGame()">Play Again</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const game = document.getElementById("game");
-        const startScreen = document.getElementById("start-screen");
-        const gameOverScreen = document.getElementById("game-over");
-        const winScreen = document.getElementById("win-screen");
+        const gameContainer = document.querySelector('.game-container');
+        const homePage = document.getElementById('home-page');
+        const gameOverScreen = document.getElementById('game-over');
+        const winScreen = document.getElementById('win-screen');
         const tileSize = 20;
         const gridSize = 20; // 20 x 20 grid
 
@@ -128,21 +158,26 @@ hide: true
         let isGameRunning = false;
 
         function startGame() {
-            startScreen.style.display = "none";
-            gameOverScreen.style.display = "none";
-            winScreen.style.display = "none";
-            game.style.display = "block";
-            snake = [{ x: 5, y: 5 }];
-            direction = { x: 1, y: 0 }; // Start moving right
-            placeApple();
+            homePage.style.display = 'none';
+            gameContainer.style.display = 'block';
+            resetGame();
             isGameRunning = true;
             drawGame();
         }
 
         function restartGame() {
-            isGameRunning = false;
-            startScreen.style.display = "block";
-            game.style.display = "none";
+            resetGame();
+            gameOverScreen.style.display = 'none';
+            winScreen.style.display = 'none';
+            gameContainer.style.display = 'block';
+            isGameRunning = true;
+            drawGame();
+        }
+
+        function resetGame() {
+            snake = [{ x: 5, y: 5 }];
+            direction = { x: 1, y: 0 }; // Start moving right
+            placeApple();
         }
 
         function placeApple() {
@@ -154,7 +189,7 @@ hide: true
             if (!isGameRunning) return;
 
             // Clear the game area
-            game.innerHTML = "";
+            gameContainer.innerHTML = '';
 
             // Draw the snake
             snake.forEach(segment => {
@@ -162,7 +197,7 @@ hide: true
                 snakeElement.style.left = `${segment.x * tileSize}px`;
                 snakeElement.style.top = `${segment.y * tileSize}px`;
                 snakeElement.classList.add("snake");
-                game.appendChild(snakeElement);
+                gameContainer.appendChild(snakeElement);
             });
 
             // Draw the apple
@@ -170,7 +205,7 @@ hide: true
             appleElement.style.left = `${apple.x * tileSize}px`;
             appleElement.style.top = `${apple.y * tileSize}px`;
             appleElement.classList.add("apple");
-            game.appendChild(appleElement);
+            gameContainer.appendChild(appleElement);
 
             // Move the snake
             moveSnake();
@@ -227,22 +262,17 @@ hide: true
 
         function gameOver() {
             isGameRunning = false;
-            game.style.display = "none";
-            gameOverScreen.style.display = "block";
+            gameContainer.style.display = 'none';
+            gameOverScreen.style.display = 'block';
         }
 
         function winGame() {
             isGameRunning = false;
-            game.style.display = "none";
-            winScreen.style.display = "block";
+            gameContainer.style.display = 'none';
+            winScreen.style.display = 'block';
         }
 
-        document.body.addEventListener("click", () => {
-            if (!isGameRunning) {
-                startGame();
-            }
-        });
-
+        // Event listener for controls
         document.addEventListener("keydown", (event) => {
             if (event.key === "w" && direction.y === 0) {
                 direction = { x: 0, y: -1 };
