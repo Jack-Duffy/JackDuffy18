@@ -244,6 +244,11 @@ hide: true
       if (event.key === 'r' || event.key === 'R') {
         restartGame();
       }
+      if (event.key === ' ' || event.key === 'Spacebar') {
+        if (homeScreen.style.display !== 'none') {
+          initializeGame();
+        }
+      }
     });
 
   </script>
