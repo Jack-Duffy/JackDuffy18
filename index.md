@@ -28,8 +28,8 @@ hide: true
         }
         .container {
             position: relative;
-            width: 500px;
-            height: 600px;
+            width: 400px;
+            height: 400px;
             background: #34495e;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
@@ -76,7 +76,7 @@ hide: true
             width: 20px;
             height: 20px;
             background: linear-gradient(45deg, #ff6f61, #f39c12);
-            border-radius: 50%;
+            border-radius: 5px; /* Rounded squares */
         }
         .apple {
             position: absolute;
@@ -85,7 +85,7 @@ hide: true
             background-color: #9b59b6;
             border-radius: 50%;
         }
-        #game-over, #win-screen {
+        #game-over {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -95,11 +95,8 @@ hide: true
             text-align: center;
             display: none;
         }
-        #game-over {
-            color: #e74c3c;
-        }
-        #win-screen {
-            color: #2ecc71;
+        #game-over p {
+            margin-bottom: 20px;
         }
         #score {
             position: absolute;
@@ -110,9 +107,6 @@ hide: true
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
             border-radius: 8px;
-        }
-        .hidden {
-            display: none;
         }
     </style>
 </head>
@@ -132,10 +126,6 @@ hide: true
                 <p>Game Over! Your Score: <span id="final-score"></span></p>
                 <button class="button" onclick="restartGame()">Restart</button>
             </div>
-            <div id="win-screen">
-                <p>Congratulations! You Win! Your Score: <span id="final-win-score"></span></p>
-                <button class="button" onclick="startGame()">Play Again</button>
-            </div>
         </div>
     </div>
 
@@ -143,10 +133,8 @@ hide: true
         const gameContainer = document.querySelector('.game-container');
         const homePage = document.getElementById('home-page');
         const gameOverScreen = document.getElementById('game-over');
-        const winScreen = document.getElementById('win-screen');
         const scoreDisplay = document.getElementById('score');
         const finalScoreDisplay = document.getElementById('final-score');
-        const finalWinScoreDisplay = document.getElementById('final-win-score');
         const tileSize = 20;
         const gridSize = 20; // 20 x 20 grid
 
@@ -167,7 +155,6 @@ hide: true
         function restartGame() {
             resetGame();
             gameOverScreen.style.display = 'none';
-            winScreen.style.display = 'none';
             gameContainer.style.display = 'block';
             isGameRunning = true;
             drawGame();
@@ -218,12 +205,6 @@ hide: true
                 return;
             }
 
-            // Check if the player wins
-            if (snake.length === gridSize * gridSize) {
-                winGame();
-                return;
-            }
-
             // Continue the game
             setTimeout(drawGame, 150);
         }
@@ -271,13 +252,6 @@ hide: true
             gameOverScreen.style.display = 'block';
         }
 
-        function winGame() {
-            isGameRunning = false;
-            gameContainer.style.display = 'none';
-            finalWinScoreDisplay.textContent = score;
-            winScreen.style.display = 'block';
-        }
-
         // Event listeners
         document.body.addEventListener("keydown", (event) => {
             if (event.key === "w" && direction.y === 0) {
@@ -288,6 +262,10 @@ hide: true
                 direction = { x: -1, y: 0 };
             } else if (event.key === "d" && direction.x === 0) {
                 direction = { x: 1, y: 0 };
+            }
+            // Hotkey for restart
+            if (event.key === "r" && !isGameRunning) {
+                restartGame();
             }
         });
     </script>
