@@ -278,4 +278,18 @@ hide: true
             winScreen.style.display = 'block';
         }
 
-        // Event
+        // Event listeners
+        document.body.addEventListener("keydown", (event) => {
+            if (event.key === "w" && direction.y === 0) {
+                direction = { x: 0, y: -1 };
+            } else if (event.key === "s" && direction.y === 0) {
+                direction = { x: 0, y: 1 };
+            } else if (event.key === "a" && direction.x === 0) {
+                direction = { x: -1, y: 0 };
+            } else if (event.key === "d" && direction.x === 0) {
+                direction = { x: 1, y: 0 };
+            }
+        });
+    </script>
+</body>
+</html>
