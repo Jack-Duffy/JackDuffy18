@@ -76,7 +76,7 @@ ________________________________________________________________________________
 
     .home-screen h1 {
       font-size: 48px;
-      color: #2980b9;
+      color: #ffffff;
     }
 
     #restartBtn {
@@ -87,6 +87,11 @@ ________________________________________________________________________________
     #restartBtn:hover {
       background-color: #c0392b;
     }
+
+    .home-screen {
+      background-color: #e74c3c;
+    }
+
   </style>
 </head>
 <body>
@@ -175,6 +180,10 @@ ________________________________________________________________________________
       snake.unshift(head);
       if (head.x === food.x && head.y === food.y) {
         food = { x: Math.floor(Math.random() * gridSize), y: Math.floor(Math.random() * gridSize) };
+        // Snake grows by 3 squares
+        for (let i = 0; i < 3; i++) {
+          snake.push({ x: snake[snake.length - 1].x, y: snake[snake.length - 1].y });
+        }
       } else {
         snake.pop();
       }
@@ -261,5 +270,6 @@ ________________________________________________________________________________
   </script>
 </body>
 </html>
+
 
 ___________________________________________________________________________________________________________________________
