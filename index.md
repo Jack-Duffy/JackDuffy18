@@ -55,13 +55,25 @@ ________________________________________________________________________________
             margin: 0;
             background-color: #f0f0f0;
         }
+        #game-container {
+            text-align: center;
+        }
+        #start-screen, #game-over {
+            display: none;
+            font-size: 24px;
+        }
+        #game-over {
+            color: red;
+        }
         #game {
+            display: none;
             position: relative;
             width: 600px;
             height: 200px;
             background-color: #fff;
             border: 2px solid #000;
             overflow: hidden;
+            margin: 20px auto;
         }
         #dino {
             position: absolute;
@@ -83,14 +95,48 @@ ________________________________________________________________________________
     </style>
 </head>
 <body>
-    <div id="game">
-        <div id="dino"></div>
-        <div id="cactus"></div>
+    <div id="game-container">
+        <div id="start-screen">
+            <p>Press "Space" to Start the Game</p>
+        </div>
+        <div id="game">
+            <div id="dino"></div>
+            <div id="cactus"></div>
+        </div>
+        <div id="game-over">
+            <p>Game Over! Press "R" to Restart</p>
+        </div>
     </div>
+
     <script>
+        const startScreen = document.getElementById("start-screen");
+        const game = document.getElementById("game");
+        const gameOver = document.getElementById("game-over");
         const dino = document.getElementById("dino");
         const cactus = document.getElementById("cactus");
         let isJumping = false;
+        let isGameRunning = false;
+        let gameInterval;
+
+        function startGame() {
+            startScreen.style.display = "none";
+            game.style.display = "block";
+            isGameRunning = true;
+            moveCactus();
+        }
+
+        function endGame() {
+            clearInterval(gameInterval);
+            isGameRunning = false;
+            game.style.display = "none";
+            gameOver.style.display = "block";
+        }
+
+        function restartGame() {
+            gameOver.style.display = "none";
+            cactus.style.left = "600px";
+            startScreen.style.display = "block";
+        }
 
         function jump() {
             if (isJumping) return;
@@ -113,22 +159,35 @@ ________________________________________________________________________________
             }, 20);
         }
 
-        document.addEventListener("keydown", (event) => {
-            if (event.key === " " || event.key === "ArrowUp") {
-                jump();
-            }
-        });
-
         function moveCactus() {
-            let cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"));
-            if (cactusLeft < -20) {
-                cactus.style.left = "600px";
-            } else {
-                cactus.style.left = cactusLeft - 5 + "px";
-            }
+            gameInterval = setInterval(() => {
+                let cactusLeft = parseInt(window.getComputedStyle(cactus).getPropertyValue("left"));
+                let dinoBottom = parseInt(window.getComputedStyle(dino).getPropertyValue("bottom"));
+
+                if (cactusLeft < 70 && cactusLeft > 50 && dinoBottom < 40) {
+                    endGame();
+                }
+
+                if (cactusLeft < -20) {
+                    cactus.style.left = "600px";
+                } else {
+                    cactus.style.left = cactusLeft - 5 + "px";
+                }
+            }, 20);
         }
 
-        setInterval(moveCactus, 20);
+        document.addEventListener("keydown", (event) => {
+            if (event.key === " " || event.key === "ArrowUp") {
+                if (!isGameRunning) {
+                    startGame();
+                } else {
+                    jump();
+                }
+            }
+            if (event.key === "r" || event.key === "R") {
+                restartGame();
+            }
+        });
     </script>
 </body>
 </html>
