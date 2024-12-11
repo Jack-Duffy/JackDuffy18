@@ -14,72 +14,111 @@ hide: true
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intermediate Snake Game</title>
+    <title>Advanced Snake Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
         }
-        #game-container {
+        #home-page {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
-        #start-screen, #game-over, #win-screen {
+        #start-screen {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        #game-over, #win-screen {
             display: none;
             font-size: 24px;
         }
         #game-over {
-            color: red;
+            color: #FF0000;
         }
         #win-screen {
-            color: green;
+            color: #4CAF50;
         }
         #game {
-            display: none;
             position: relative;
+            display: block;
             width: 400px;
             height: 400px;
-            background-color: #fafafa; /* Light background */
-            border: 2px solid #fff;
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             overflow: hidden;
         }
         .snake {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: #008000; /* Green color for the snake */
+            background-color: #00FF00;
+            border-radius: 50%;
+            transition: all 0.2s ease;
         }
         .apple {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: #FF0000; /* Red color for the apple */
+            background-color: #FF5733;
+            border-radius: 50%;
+        }
+        .button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div id="game-container">
+    <div id="home-page">
         <div id="start-screen">
-            <p>Welcome to Snake Game!<br>Click anywhere to start.</p>
+            <h1>Welcome to Advanced Snake Game!</h1>
+            <p>Use <strong>WASD</strong> to control the snake.</p>
+            <button class="button" onclick="startGame()">Start Game</button>
         </div>
-        <div id="game"></div>
+
+        <div id="game" class="hidden"></div>
+
         <div id="game-over">
             <p>Game Over! Click to Restart</p>
+            <button class="button" onclick="restartGame()">Restart</button>
         </div>
         <div id="win-screen">
             <p>Congratulations! You Win! Click to Play Again</p>
+            <button class="button" onclick="startGame()">Play Again</button>
         </div>
     </div>
 
     <script>
+        const game = document.getElementById("game");
         const startScreen = document.getElementById("start-screen");
         const gameOverScreen = document.getElementById("game-over");
         const winScreen = document.getElementById("win-screen");
-        const game = document.getElementById("game");
         const tileSize = 20;
         const gridSize = 20; // 20 x 20 grid
 
@@ -205,13 +244,13 @@ hide: true
         });
 
         document.addEventListener("keydown", (event) => {
-            if (event.key === "ArrowUp" && direction.y === 0) {
+            if (event.key === "w" && direction.y === 0) {
                 direction = { x: 0, y: -1 };
-            } else if (event.key === "ArrowDown" && direction.y === 0) {
+            } else if (event.key === "s" && direction.y === 0) {
                 direction = { x: 0, y: 1 };
-            } else if (event.key === "ArrowLeft" && direction.x === 0) {
+            } else if (event.key === "a" && direction.x === 0) {
                 direction = { x: -1, y: 0 };
-            } else if (event.key === "ArrowRight" && direction.x === 0) {
+            } else if (event.key === "d" && direction.x === 0) {
                 direction = { x: 1, y: 0 };
             }
         });
