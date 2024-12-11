@@ -9,35 +9,6 @@ hide: true
 Not in About(Dont worry about it)
 
 
-___________________________________________________________________________________________________________________________
-
-<img src="images/IMG_5269 copy.JPG" alt="Description"
-style="width:400px; height:auto;">
-
-___________________________________________________________________________________________________________________________
-
-This is my Dog Named Piper, She is 8 years old and is a labradoodle.
-
-___________________________________________________________________________________________________________________________
-
-<img src="images/Mountain.webp" alt="Description"
-style="width:400px; height:auto;">
-
-___________________________________________________________________________________________________________________________
-
-One of my favorite things to do is snowboarding in the winter. That is why it is my favorite time of year, my favorite resorts are <i>Mammoth Mountain</i> and <i>Brian Head</i> in utah.
-
- __________________________________________________________________________________________________________________________
-
-<img src="images/x2.jpeg" alt="Description"
-style="width:400px; height:auto;">
-
-___________________________________________________________________________________________________________________________
-
-Another one of my favorite things is riding roller coasters my favorite roller coaster right now is X2 at <i>Six Flags Magic Mountain</i>.
-
-___________________________________________________________________________________________________________________________
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +43,8 @@ ________________________________________________________________________________
             position: relative;
             width: 400px;
             height: 400px;
-            background-color: #000;
+            background-image: url('https://via.placeholder.com/400x400?text=Game+Background');
+            background-size: cover;
             border: 2px solid #fff;
             overflow: hidden;
         }
@@ -80,27 +52,29 @@ ________________________________________________________________________________
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: green;
+            background-image: url('https://via.placeholder.com/20/008000?text=');
+            background-size: cover;
         }
         .apple {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: red;
+            background-image: url('https://via.placeholder.com/20/FF0000?text=');
+            background-size: cover;
         }
     </style>
 </head>
 <body>
     <div id="game-container">
         <div id="start-screen">
-            <p>Press "Space" to Start</p>
+            <p>Welcome to Snake Game!<br>Click anywhere to start.</p>
         </div>
         <div id="game"></div>
         <div id="game-over">
-            <p>Game Over! Press "R" to Restart</p>
+            <p>Game Over! Click to Restart</p>
         </div>
         <div id="win-screen">
-            <p>Congratulations! You Win! Press "R" to Play Again</p>
+            <p>Congratulations! You Win! Click to Play Again</p>
         </div>
     </div>
 
@@ -123,7 +97,7 @@ ________________________________________________________________________________
             winScreen.style.display = "none";
             game.style.display = "block";
             snake = [{ x: 5, y: 5 }];
-            direction = { x: 0, y: 0 };
+            direction = { x: 1, y: 0 }; // Start moving right
             placeApple();
             isGameRunning = true;
             drawGame();
@@ -178,7 +152,7 @@ ________________________________________________________________________________
             }
 
             // Continue the game
-            setTimeout(drawGame, 200);
+            setTimeout(drawGame, 150);
         }
 
         function moveSnake() {
@@ -227,13 +201,13 @@ ________________________________________________________________________________
             winScreen.style.display = "block";
         }
 
-        document.addEventListener("keydown", (event) => {
-            if (!isGameRunning && event.key === " ") {
+        document.body.addEventListener("click", () => {
+            if (!isGameRunning) {
                 startGame();
-            } else if (!isGameRunning && event.key.toLowerCase() === "r") {
-                restartGame();
             }
+        });
 
+        document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowUp" && direction.y === 0) {
                 direction = { x: 0, y: -1 };
             } else if (event.key === "ArrowDown" && direction.y === 0) {
