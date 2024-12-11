@@ -6,21 +6,18 @@ hide: true
 ---
 -
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Snake Game</title>
+    <title>Colorful Snake Game</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #222;
+            background-color: #2c3e50;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,7 +30,7 @@ hide: true
             position: relative;
             width: 500px;
             height: 600px;
-            background: #333;
+            background: #34495e;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
             overflow: hidden;
@@ -48,7 +45,7 @@ hide: true
         h1 {
             font-size: 36px;
             margin-bottom: 20px;
-            color: #00FF00;
+            color: #e74c3c;
         }
         p {
             font-size: 20px;
@@ -58,7 +55,7 @@ hide: true
         .button {
             padding: 15px 30px;
             font-size: 18px;
-            background-color: #4CAF50;
+            background-color: #1abc9c;
             color: white;
             border: none;
             border-radius: 8px;
@@ -66,7 +63,7 @@ hide: true
             transition: background-color 0.3s;
         }
         .button:hover {
-            background-color: #45a049;
+            background-color: #16a085;
         }
         .game-container {
             display: none;
@@ -78,15 +75,14 @@ hide: true
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: #00FF00;
+            background: linear-gradient(45deg, #ff6f61, #f39c12);
             border-radius: 50%;
-            transition: transform 0.2s ease-in-out;
         }
         .apple {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: #FF5733;
+            background-color: #9b59b6;
             border-radius: 50%;
         }
         #game-over, #win-screen {
@@ -100,15 +96,20 @@ hide: true
             display: none;
         }
         #game-over {
-            color: #FF5733;
+            color: #e74c3c;
         }
         #win-screen {
-            color: #4CAF50;
+            color: #2ecc71;
         }
-        .instructions {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #ddd;
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
         }
         .hidden {
             display: none;
@@ -119,26 +120,20 @@ hide: true
     <div class="container">
         <!-- Home Page -->
         <div id="home-page">
-            <h1>Advanced Snake Game</h1>
+            <h1>Colorful Snake Game</h1>
             <p>Use <strong>WASD</strong> keys to control the snake.</p>
             <button class="button" onclick="startGame()">Start Game</button>
-            <div class="instructions">
-                <p>Instructions:</p>
-                <p>1. Use <strong>W</strong> to move up</p>
-                <p>2. Use <strong>A</strong> to move left</p>
-                <p>3. Use <strong>S</strong> to move down</p>
-                <p>4. Use <strong>D</strong> to move right</p>
-            </div>
         </div>
 
         <!-- Game Area -->
         <div class="game-container" id="game">
+            <div id="score">Score: 0</div>
             <div id="game-over">
-                <p>Game Over! Click to Restart</p>
+                <p>Game Over! Your Score: <span id="final-score"></span></p>
                 <button class="button" onclick="restartGame()">Restart</button>
             </div>
             <div id="win-screen">
-                <p>Congratulations! You Win! Click to Play Again</p>
+                <p>Congratulations! You Win! Your Score: <span id="final-win-score"></span></p>
                 <button class="button" onclick="startGame()">Play Again</button>
             </div>
         </div>
@@ -149,12 +144,16 @@ hide: true
         const homePage = document.getElementById('home-page');
         const gameOverScreen = document.getElementById('game-over');
         const winScreen = document.getElementById('win-screen');
+        const scoreDisplay = document.getElementById('score');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const finalWinScoreDisplay = document.getElementById('final-win-score');
         const tileSize = 20;
         const gridSize = 20; // 20 x 20 grid
 
         let snake = [{ x: 5, y: 5 }];
         let direction = { x: 0, y: 0 };
         let apple = { x: 10, y: 10 };
+        let score = 0;
         let isGameRunning = false;
 
         function startGame() {
@@ -177,7 +176,9 @@ hide: true
         function resetGame() {
             snake = [{ x: 5, y: 5 }];
             direction = { x: 1, y: 0 }; // Start moving right
+            score = 0;
             placeApple();
+            scoreDisplay.textContent = `Score: ${score}`;
         }
 
         function placeApple() {
@@ -190,6 +191,7 @@ hide: true
 
             // Clear the game area
             gameContainer.innerHTML = '';
+            gameContainer.appendChild(scoreDisplay);
 
             // Draw the snake
             snake.forEach(segment => {
@@ -232,6 +234,8 @@ hide: true
             // Check if the snake eats the apple
             if (newHead.x === apple.x && newHead.y === apple.y) {
                 placeApple();
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
             } else {
                 snake.pop(); // Remove the tail
             }
@@ -263,27 +267,15 @@ hide: true
         function gameOver() {
             isGameRunning = false;
             gameContainer.style.display = 'none';
+            finalScoreDisplay.textContent = score;
             gameOverScreen.style.display = 'block';
         }
 
         function winGame() {
             isGameRunning = false;
             gameContainer.style.display = 'none';
+            finalWinScoreDisplay.textContent = score;
             winScreen.style.display = 'block';
         }
 
-        // Event listener for controls
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "w" && direction.y === 0) {
-                direction = { x: 0, y: -1 };
-            } else if (event.key === "s" && direction.y === 0) {
-                direction = { x: 0, y: 1 };
-            } else if (event.key === "a" && direction.x === 0) {
-                direction = { x: -1, y: 0 };
-            } else if (event.key === "d" && direction.x === 0) {
-                direction = { x: 1, y: 0 };
-            }
-        });
-    </script>
-</body>
-</html>
+        // Event
