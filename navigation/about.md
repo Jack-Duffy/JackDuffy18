@@ -31,7 +31,7 @@ Another thing I love to do is watch movies and shows. My favorite show is Breaki
 ___________________________________________________________________________________________________________________________
 
 
-<img src="../images/IMG_5269 copy.JPGg" alt="Alt Text" width="300">
+<img src="../images/IMG_5269 copy.JPG" alt="Alt Text" width="300">
 ___________________________________________________________________________________________________________________________
 
 This is my Dog Named Piper, She is 8 years old and is a labradoodle.
