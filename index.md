@@ -23,6 +23,7 @@ hide: true
       align-items: center;
       height: 100vh;
       overflow: hidden;
+      flex-direction: column;
     }
 
     canvas {
@@ -32,8 +33,7 @@ hide: true
     }
 
     .button-container {
-      position: absolute;
-      top: 20px;
+      margin-top: 20px;
       display: flex;
       gap: 10px;
     }
@@ -52,7 +52,7 @@ hide: true
       background-color: #2980b9;
     }
 
-    .game-over, .victory {
+    .game-over, .victory, .home-screen {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -68,13 +68,30 @@ hide: true
       font-size: 48px;
       color: #e74c3c;
     }
+
+    .home-screen h1 {
+      font-size: 48px;
+      color: #2980b9;
+    }
+
+    #restartBtn {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    #restartBtn:hover {
+      background-color: #c0392b;
+    }
   </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="600" height="600"></canvas>
-  <div class="button-container">
+  <div class="home-screen">
+    <h1>Welcome to Snake Game</h1>
     <button class="button" id="startBtn">Start Game</button>
-    <button class="button" id="restartBtn">Restart Game</button>
+  </div>
+  <canvas id="gameCanvas" width="600" height="600" style="display: none;"></canvas>
+  <div class="button-container">
+    <button class="button" id="restartBtn" style="display: none;">Restart Game</button>
   </div>
   <div class="game-over">
     <h1>Game Over!</h1>
@@ -92,6 +109,7 @@ hide: true
     const restartBtn = document.getElementById('restartBtn');
     const gameOverScreen = document.querySelector('.game-over');
     const victoryScreen = document.querySelector('.victory');
+    const homeScreen = document.querySelector('.home-screen');
     const gridSize = 20;
     const tileSize = canvas.width / gridSize;
 
@@ -105,6 +123,9 @@ hide: true
       ];
       food = { x: Math.floor(Math.random() * gridSize), y: Math.floor(Math.random() * gridSize) };
       direction = 'RIGHT';
+      homeScreen.style.display = 'none';
+      canvas.style.display = 'block';
+      restartBtn.style.display = 'inline-block';
       gameOverScreen.style.display = 'none';
       victoryScreen.style.display = 'none';
       renderGame();
@@ -228,4 +249,3 @@ hide: true
   </script>
 </body>
 </html>
-
