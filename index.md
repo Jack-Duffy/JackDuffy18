@@ -113,7 +113,7 @@ hide: true
     const gridSize = 20;
     const tileSize = canvas.width / gridSize;
 
-    let snake, food, direction, gameInterval;
+    let snake, food, direction, gameInterval, gameStarted = false;
 
     function initializeGame() {
       snake = [
@@ -123,6 +123,7 @@ hide: true
       ];
       food = { x: Math.floor(Math.random() * gridSize), y: Math.floor(Math.random() * gridSize) };
       direction = 'RIGHT';
+      gameStarted = true;
       homeScreen.style.display = 'none';
       canvas.style.display = 'block';
       restartBtn.style.display = 'inline-block';
@@ -134,6 +135,7 @@ hide: true
 
     function startGameLoop() {
       gameInterval = setInterval(() => {
+        if (!gameStarted) return; // Do nothing if game hasn't started yet
         moveSnake();
         if (checkCollision()) {
           clearInterval(gameInterval);
@@ -245,7 +247,7 @@ hide: true
         restartGame();
       }
       if (event.key === ' ' || event.key === 'Spacebar') {
-        if (homeScreen.style.display !== 'none') {
+        if (!gameStarted) {
           initializeGame();
         }
       }
@@ -254,3 +256,4 @@ hide: true
   </script>
 </body>
 </html>
+
