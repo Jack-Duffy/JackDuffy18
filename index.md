@@ -5,6 +5,25 @@ description: Home Page
 hide: true
 ---
 
+
+
+# Validate Notebook
+
+<a href="https://example.com" target="_blank" style="text-decoration: none;">
+    <button style="
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;">
+        Go to Example
+    </button>
+</a>
+
+
+
 ___________________________________________________________________________________________________________________________
 
 # Fun Games!!!!!!
