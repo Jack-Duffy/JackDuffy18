@@ -6,8 +6,8 @@ github_repo: "JackDuffy18"
 baseurl: "/JackDuffy18"
 future: true
 remote_theme: jekyll/cayman
-minima:
-  skin: dark
+cayman:
+  skin: darklight
   social_links:
     - { platform: github, user_url: "https://github.com/nighthawkcoders"}
     - { platform: x, user_url: "https://x.com/NighthawkCoding/" }
