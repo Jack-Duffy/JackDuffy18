@@ -41,18 +41,19 @@ ________________________________________________________________________________
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Verdana', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #e8f5e9;
+            background-color: #2c3e50;
         }
         canvas {
             display: none;
-            background: linear-gradient(to bottom, #8bc34a, #689f38);
-            border: 10px solid #33691e;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to bottom, #27ae60, #2ecc71);
+            border: 12px solid #1e8449;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
         }
         .menu {
             display: flex;
@@ -60,34 +61,42 @@ ________________________________________________________________________________
             align-items: center;
             justify-content: center;
             text-align: center;
+            background: linear-gradient(to bottom right, #34495e, #2c3e50);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
         .menu h1 {
             font-size: 3rem;
-            color: #33691e;
+            color: #ecf0f1;
             margin-bottom: 20px;
+            text-shadow: 2px 2px #34495e;
         }
         .menu p {
             font-size: 1.2rem;
+            color: #bdc3c7;
             margin-bottom: 20px;
         }
         .menu button {
-            padding: 10px 20px;
-            font-size: 1rem;
-            background-color: #689f38;
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            background-color: #1abc9c;
             color: white;
             border: none;
             cursor: pointer;
-            transition: background-color 0.3s;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s;
         }
         .menu button:hover {
-            background-color: #33691e;
+            background-color: #16a085;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
     <div class="menu" id="startMenu">
-        <h1>Snake Game</h1>
-        <p>Use WASD to control the snake. Collect apples to grow longer. Avoid the edges and yourself!</p>
+        <h1>Welcome to Snake Game</h1>
+        <p>Control the snake using WASD keys. Eat the apple to grow, but avoid hitting the edges or yourself!</p>
         <button onclick="startGame()">Start Game</button>
     </div>
     <div class="menu" id="endMenu" style="display: none;">
@@ -145,7 +154,7 @@ ________________________________________________________________________________
             // Check collisions
             if (head.x < 0 || head.y < 0 || head.x >= canvas.width / gridSize || head.y >= canvas.height / gridSize ||
                 snake.some(segment => segment.x === head.x && segment.y === head.y)) {
-                endGame('Game Over');
+                endGame('Game Over!');
                 return;
             }
 
@@ -170,7 +179,7 @@ ________________________________________________________________________________
             // Draw checkerboard background
             for (let x = 0; x < canvas.width / gridSize; x++) {
                 for (let y = 0; y < canvas.height / gridSize; y++) {
-                    ctx.fillStyle = (x + y) % 2 === 0 ? '#8bc34a' : '#689f38';
+                    ctx.fillStyle = (x + y) % 2 === 0 ? '#27ae60' : '#2ecc71';
                     ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
                 }
             }
@@ -186,8 +195,8 @@ ________________________________________________________________________________
             // Draw snake
             for (let i = 0; i < snake.length; i++) {
                 const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-                gradient.addColorStop(0, `rgba(33, 150, 243, ${1 - i / snake.length})`);
-                gradient.addColorStop(1, `rgba(3, 169, 244, ${1 - i / snake.length})`);
+                gradient.addColorStop(0, `rgba(52, 152, 219, ${1 - i / snake.length})`);
+                gradient.addColorStop(1, `rgba(41, 128, 185, ${1 - i / snake.length})`);
                 ctx.fillStyle = gradient;
                 ctx.fillRect(snake[i].x * gridSize, snake[i].y * gridSize, gridSize, gridSize);
 
@@ -221,7 +230,6 @@ ________________________________________________________________________________
     </script>
 </body>
 </html>
-
 
 
 ___________________________________________________________________________________________________________________________
