@@ -31,97 +31,166 @@ ________________________________________________________________________________
 ___________________________________________________________________________________________________________________________
 
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Snake Game</title>
+    <title>Colorful Snake Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
-            background-color: #f0f0f0;
-        }
-        #game-container {
+            padding: 0;
+            background-color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
             text-align: center;
-            margin: auto;
+            transition: all 0.3s ease;
+        }
+        .container {
+            position: relative;
             width: 400px;
             height: 400px;
+            background: #34495e;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+        #home-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #e74c3c;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #16a085;
+        }
+        .game-container {
+            display: none;
             position: relative;
-            border: 5px solid #000;
-            background-color: #d4f1f9;
+            width: 100%;
+            height: 100%;
         }
         .snake {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: #4CAF50;
-            border-radius: 5px;
+            background: linear-gradient(45deg, #ff6f61, #f39c12);
+            border-radius: 5px; /* Rounded squares */
         }
         .apple {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: #FF5733;
+            background-color: #9b59b6;
             border-radius: 50%;
         }
         #game-over {
-            display: none;
-            font-size: 24px;
-            color: black;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
+            font-size: 24px;
+            color: #fff;
+            text-align: center;
+            display: none;
         }
-        #restart-btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        #game-over p {
+            margin-bottom: 20px;
         }
-        #restart-btn:hover {
-            background-color: #0056b3;
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 20px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-    <div id="game-container">
-        <div id="game"></div>
-        <div id="game-over">
-            <p>Game Over!</p>
-            <button id="restart-btn">Restart</button>
+    <div class="container">
+        <!-- Home Page -->
+        <div id="home-page">
+            <h1>Colorful Snake Game</h1>
+            <p>Use <strong>WASD</strong> keys to control the snake.</p>
+            <button class="button" onclick="startGame()">Start Game</button>
+        </div>
+
+        <!-- Game Area -->
+        <div class="game-container" id="game">
+            <div id="score">Score: 0</div>
+            <div id="game-over">
+                <p>Game Over! Your Score: <span id="final-score"></span></p>
+                <button class="button" onclick="restartGame()">Restart</button>
+            </div>
         </div>
     </div>
 
     <script>
-        const gameContainer = document.getElementById("game-container");
-        const game = document.getElementById("game");
-        const gameOverScreen = document.getElementById("game-over");
-        const restartButton = document.getElementById("restart-btn");
+        const gameContainer = document.querySelector('.game-container');
+        const homePage = document.getElementById('home-page');
+        const gameOverScreen = document.getElementById('game-over');
+        const scoreDisplay = document.getElementById('score');
+        const finalScoreDisplay = document.getElementById('final-score');
         const tileSize = 20;
-        const gridSize = 20;
+        const gridSize = 20; // 20 x 20 grid
 
         let snake = [{ x: 5, y: 5 }];
         let direction = { x: 0, y: 0 };
         let apple = { x: 10, y: 10 };
+        let score = 0;
         let isGameRunning = false;
 
         function startGame() {
-            gameOverScreen.style.display = "none";
-            game.innerHTML = "";
-            snake = [{ x: 5, y: 5 }];
-            direction = { x: 1, y: 0 };
-            placeApple();
+            homePage.style.display = 'none';
+            gameContainer.style.display = 'block';
+            resetGame();
             isGameRunning = true;
             drawGame();
+        }
+
+        function restartGame() {
+            resetGame();
+            gameOverScreen.style.display = 'none';
+            gameContainer.style.display = 'block';
+            isGameRunning = true;
+            drawGame();
+        }
+
+        function resetGame() {
+            snake = [{ x: 5, y: 5 }];
+            direction = { x: 1, y: 0 }; // Start moving right
+            score = 0;
+            placeApple();
+            scoreDisplay.textContent = `Score: ${score}`;
         }
 
         function placeApple() {
@@ -132,57 +201,68 @@ ________________________________________________________________________________
         function drawGame() {
             if (!isGameRunning) return;
 
-            game.innerHTML = "";
+            // Clear the game area
+            gameContainer.innerHTML = '';
+            gameContainer.appendChild(scoreDisplay);
 
-            // Draw snake
+            // Draw the snake
             snake.forEach(segment => {
                 const snakeElement = document.createElement("div");
                 snakeElement.style.left = `${segment.x * tileSize}px`;
                 snakeElement.style.top = `${segment.y * tileSize}px`;
                 snakeElement.classList.add("snake");
-                game.appendChild(snakeElement);
+                gameContainer.appendChild(snakeElement);
             });
 
-            // Draw apple
+            // Draw the apple
             const appleElement = document.createElement("div");
             appleElement.style.left = `${apple.x * tileSize}px`;
             appleElement.style.top = `${apple.y * tileSize}px`;
             appleElement.classList.add("apple");
-            game.appendChild(appleElement);
+            gameContainer.appendChild(appleElement);
 
+            // Move the snake
             moveSnake();
 
+            // Check for collisions
             if (checkCollision()) {
-                endGame();
+                gameOver();
                 return;
             }
 
+            // Continue the game
             setTimeout(drawGame, 150);
         }
 
         function moveSnake() {
             const newHead = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
+            // Check if the snake eats the apple
             if (newHead.x === apple.x && newHead.y === apple.y) {
                 placeApple();
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
             } else {
-                snake.pop();
+                snake.pop(); // Remove the tail
             }
 
-            snake.unshift(newHead);
+            snake.unshift(newHead); // Add new head
         }
 
         function checkCollision() {
-            const head = snake[0];
+            // Check wall collision
             if (
-                head.x < 0 || head.x >= gridSize ||
-                head.y < 0 || head.y >= gridSize
+                snake[0].x < 0 ||
+                snake[0].x >= gridSize ||
+                snake[0].y < 0 ||
+                snake[0].y >= gridSize
             ) {
                 return true;
             }
 
+            // Check self-collision
             for (let i = 1; i < snake.length; i++) {
-                if (snake[i].x === head.x && snake[i].y === head.y) {
+                if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
                     return true;
                 }
             }
@@ -190,40 +270,32 @@ ________________________________________________________________________________
             return false;
         }
 
-        function endGame() {
+        function gameOver() {
             isGameRunning = false;
-            gameOverScreen.style.display = "block";
+            gameContainer.style.display = 'none';
+            finalScoreDisplay.textContent = score;
+            gameOverScreen.style.display = 'block';
         }
 
-        document.addEventListener("keydown", (event) => {
-            if (!isGameRunning) return;
-
-            switch (event.key) {
-                case "w":
-                    if (direction.y === 0) direction = { x: 0, y: -1 };
-                    break;
-                case "s":
-                    if (direction.y === 0) direction = { x: 0, y: 1 };
-                    break;
-                case "a":
-                    if (direction.x === 0) direction = { x: -1, y: 0 };
-                    break;
-                case "d":
-                    if (direction.x === 0) direction = { x: 1, y: 0 };
-                    break;
-                default:
-                    break;
+        // Event listeners
+        document.body.addEventListener("keydown", (event) => {
+            if (event.key === "w" && direction.y === 0) {
+                direction = { x: 0, y: -1 };
+            } else if (event.key === "s" && direction.y === 0) {
+                direction = { x: 0, y: 1 };
+            } else if (event.key === "a" && direction.x === 0) {
+                direction = { x: -1, y: 0 };
+            } else if (event.key === "d" && direction.x === 0) {
+                direction = { x: 1, y: 0 };
+            }
+            // Hotkey for restart
+            if (event.key === "r" && !isGameRunning) {
+                restartGame();
             }
         });
-
-        restartButton.addEventListener("click", startGame);
-
-        // Start the game on load
-        startGame();
     </script>
 </body>
 </html>
-
 
 
 ___________________________________________________________________________________________________________________________
