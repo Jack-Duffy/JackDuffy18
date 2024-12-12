@@ -5,7 +5,7 @@ github_username: nighthawkcoders
 github_repo: "JackDuffy18"
 baseurl: "/JackDuffy18"
 future: true
-remote_theme: jekyll/minima
+remote_theme: jekyll/cayman
 minima:
   skin: dark
   social_links:
