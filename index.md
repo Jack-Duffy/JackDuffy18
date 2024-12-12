@@ -9,7 +9,7 @@ hide: true
 
 # Validate Notebook
 
-<a href="https://example.com" target="_blank" style="text-decoration: none;">
+<a href="https://github.com/Jack-Duffy/JackDuffy18/blob/main/_notebooks/Foundation/B-tools_and_equipment/2023-08-22-devops_tools-verify.ipynb" target="_blank" style="text-decoration: none;">
     <button style="
         padding: 10px 20px;
         background-color: #007BFF;
@@ -18,7 +18,7 @@ hide: true
         border-radius: 5px;
         cursor: pointer;
         font-size: 16px;">
-        Go to Example
+        Notebook
     </button>
 </a>
 
