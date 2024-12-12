@@ -115,14 +115,16 @@ ________________________________________________________________________________
         const gridSize = 20;
         let snake = [{ x: 5, y: 5 }];
         let direction = { x: 0, y: 0 };
+        let nextDirection = { x: 0, y: 0 };
         let apple = { x: 10, y: 10 };
         let gameRunning = false;
-        
+
         function startGame() {
             startMenu.style.display = 'none';
             canvas.style.display = 'block';
             snake = [{ x: 5, y: 5 }];
             direction = { x: 0, y: 0 };
+            nextDirection = { x: 0, y: 0 };
             placeApple();
             gameRunning = true;
             gameLoop();
@@ -147,6 +149,9 @@ ________________________________________________________________________________
 
         function gameLoop() {
             if (!gameRunning) return;
+
+            // Update direction
+            direction = nextDirection;
 
             // Update snake position
             const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
@@ -214,22 +219,20 @@ ________________________________________________________________________________
             if (!gameRunning) return;
             switch (e.key) {
                 case 'w':
-                    if (direction.y === 0) direction = { x: 0, y: -1 };
+                    if (direction.y === 0) nextDirection = { x: 0, y: -1 };
                     break;
                 case 'a':
-                    if (direction.x === 0) direction = { x: -1, y: 0 };
+                    if (direction.x === 0) nextDirection = { x: -1, y: 0 };
                     break;
                 case 's':
-                    if (direction.y === 0) direction = { x: 0, y: 1 };
+                    if (direction.y === 0) nextDirection = { x: 0, y: 1 };
                     break;
                 case 'd':
-                    if (direction.x === 0) direction = { x: 1, y: 0 };
+                    if (direction.x === 0) nextDirection = { x: 1, y: 0 };
                     break;
             }
         });
-    </script>
-</body>
-</html>
+
 
 
 ___________________________________________________________________________________________________________________________
