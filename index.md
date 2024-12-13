@@ -43,6 +43,7 @@ ________________________________________________________________________________
       margin: 0;
       padding: 0;
       background-color: #f4f4f4;
+      overflow-y: auto;
     }
 
     .container {
@@ -50,22 +51,30 @@ ________________________________________________________________________________
       padding: 20px;
     }
 
-    .home-screen, .game-over, .victory {
+    .screen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.95);
-      display: flex;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      background-color: white;
+      z-index: 10;
+      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 10;
     }
 
-    .home-screen h1, .game-over h1, .victory h1 {
-      font-size: 48px;
+    .screen.active {
+      display: flex;
+    }
+
+    .screen h1 {
+      font-size: 36px;
       color: #2c3e50;
       margin-bottom: 20px;
     }
@@ -73,7 +82,6 @@ ________________________________________________________________________________
     .instructions {
       font-size: 18px;
       color: #555;
-      max-width: 600px;
       text-align: center;
       margin-bottom: 20px;
     }
@@ -99,28 +107,39 @@ ________________________________________________________________________________
       border: 5px solid #2c3e50;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     }
+
+    #gameContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
-  <div class="home-screen" id="homeScreen">
-    <h1>Welcome to Snake Game</h1>
-    <p class="instructions">
-      Use <b>WASD</b> or <b>Arrow Keys</b> to move the snake. Press <b>Space</b> to start the game. <br>
-      Collect apples to grow your snake. Avoid hitting the edges or yourself!
-    </p>
-    <button class="button" id="startBtn">Start Game</button>
-  </div>
+  <div id="gameContainer">
+    <div class="screen" id="homeScreen">
+      <h1>Welcome to Snake Game</h1>
+      <p class="instructions">
+        Use <b>WASD</b> or <b>Arrow Keys</b> to move the snake. Press <b>Space</b> to start the game. <br>
+        Collect apples to grow your snake. Avoid hitting the edges or yourself!
+      </p>
+      <button class="button" id="startBtn">Start Game</button>
+    </div>
 
-  <canvas id="gameCanvas" width="600" height="600"></canvas>
+    <canvas id="gameCanvas" width="600" height="600" style="display: none;"></canvas>
 
-  <div class="game-over" id="gameOverScreen" style="display: none;">
-    <h1>Game Over</h1>
-    <button class="button" id="restartBtn">Restart</button>
-  </div>
+    <div class="screen" id="gameOverScreen">
+      <h1>Game Over</h1>
+      <button class="button" id="restartBtn">Restart</button>
+      <button class="button" id="backHomeBtn1">Back to Home</button>
+    </div>
 
-  <div class="victory" id="victoryScreen" style="display: none;">
-    <h1>Congratulations, You Win!</h1>
-    <button class="button" id="restartBtnVictory">Play Again</button>
+    <div class="screen" id="victoryScreen">
+      <h1>Congratulations, You Win!</h1>
+      <button class="button" id="restartBtnVictory">Play Again</button>
+      <button class="button" id="backHomeBtn2">Back to Home</button>
+    </div>
   </div>
 
   <script>
@@ -129,6 +148,8 @@ ________________________________________________________________________________
     const startBtn = document.getElementById('startBtn');
     const restartBtn = document.getElementById('restartBtn');
     const restartBtnVictory = document.getElementById('restartBtnVictory');
+    const backHomeBtn1 = document.getElementById('backHomeBtn1');
+    const backHomeBtn2 = document.getElementById('backHomeBtn2');
     const homeScreen = document.getElementById('homeScreen');
     const gameOverScreen = document.getElementById('gameOverScreen');
     const victoryScreen = document.getElementById('victoryScreen');
@@ -149,9 +170,10 @@ ________________________________________________________________________________
       ];
       direction = 'RIGHT';
       generateFood();
-      homeScreen.style.display = 'none';
-      gameOverScreen.style.display = 'none';
-      victoryScreen.style.display = 'none';
+      homeScreen.classList.remove('active');
+      gameOverScreen.classList.remove('active');
+      victoryScreen.classList.remove('active');
+      canvas.style.display = 'block';
       gameRunning = true;
       startGameLoop();
     }
@@ -202,42 +224,29 @@ ________________________________________________________________________________
 
     function renderGame() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      renderBackground();
-      renderSnake();
-      renderFood();
-    }
-
-    function renderBackground() {
       for (let y = 0; y < gridSize; y++) {
         for (let x = 0; x < gridSize; x++) {
           ctx.fillStyle = (x + y) % 2 === 0 ? '#8BC34A' : '#AED581';
           ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize);
         }
       }
-    }
-
-    function renderSnake() {
       snake.forEach((segment, index) => {
         const intensity = 255 - (index * (255 / snake.length));
         ctx.fillStyle = `rgb(0, 0, ${intensity})`;
         ctx.fillRect(segment.x * tileSize, segment.y * tileSize, tileSize, tileSize);
       });
-    }
-
-    function renderFood() {
       ctx.fillStyle = '#D84315';
       ctx.fillRect(food.x * tileSize + 2, food.y * tileSize + 2, tileSize - 4, tileSize - 4);
-      ctx.fillStyle = '#6D4C41';
-      ctx.fillRect(food.x * tileSize + tileSize / 2 - 2, food.y * tileSize - 4, 4, 8);
     }
 
     function endGame(isVictory) {
       gameRunning = false;
       clearInterval(gameInterval);
+      canvas.style.display = 'none';
       if (isVictory) {
-        victoryScreen.style.display = 'flex';
+        victoryScreen.classList.add('active');
       } else {
-        gameOverScreen.style.display = 'flex';
+        gameOverScreen.classList.add('active');
       }
     }
 
@@ -250,16 +259,26 @@ ________________________________________________________________________________
       if (key === 'D' && direction !== 'LEFT') direction = 'RIGHT';
     }
 
+    function returnToHome() {
+      canvas.style.display = 'none';
+      homeScreen.classList.add('active');
+      gameOverScreen.classList.remove('active');
+      victoryScreen.classList.remove('active');
+    }
+
     startBtn.addEventListener('click', initializeGame);
     restartBtn.addEventListener('click', initializeGame);
     restartBtnVictory.addEventListener('click', initializeGame);
+    backHomeBtn1.addEventListener('click', returnToHome);
+    backHomeBtn2.addEventListener('click', returnToHome);
     document.addEventListener('keydown', changeDirection);
     window.addEventListener('keydown', (event) => {
-      if (event.key === ' ') initializeGame();
+      if (event.key === ' ' && !gameRunning) initializeGame();
     });
   </script>
 </body>
 </html>
+
 
 
 
