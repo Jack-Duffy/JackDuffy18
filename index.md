@@ -52,7 +52,7 @@ ________________________________________________________________________________
     }
 
     .screen {
-      position: fixed;
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -101,6 +101,16 @@ ________________________________________________________________________________
       background-color: #2980b9;
     }
 
+    #gameSection {
+      margin: 50px auto;
+      max-width: 620px;
+      padding: 20px;
+      background-color: #e8f5e9;
+      border: 2px solid #2c3e50;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
     canvas {
       display: block;
       margin: 20px auto;
@@ -109,10 +119,7 @@ ________________________________________________________________________________
     }
 
     #gameContainer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
+      text-align: center;
     }
   </style>
 </head>
@@ -127,7 +134,9 @@ ________________________________________________________________________________
       <button class="button" id="startBtn">Start Game</button>
     </div>
 
-    <canvas id="gameCanvas" width="600" height="600" style="display: none;"></canvas>
+    <div id="gameSection">
+      <canvas id="gameCanvas" width="600" height="600" style="display: none;"></canvas>
+    </div>
 
     <div class="screen" id="gameOverScreen">
       <h1>Game Over</h1>
@@ -159,6 +168,7 @@ ________________________________________________________________________________
     let snake = [];
     let food = {};
     let direction = 'RIGHT';
+    let nextDirection = 'RIGHT';
     let gameInterval;
     let gameRunning = false;
 
@@ -169,6 +179,7 @@ ________________________________________________________________________________
         { x: 8, y: 10 }
       ];
       direction = 'RIGHT';
+      nextDirection = 'RIGHT';
       generateFood();
       homeScreen.classList.remove('active');
       gameOverScreen.classList.remove('active');
@@ -181,6 +192,7 @@ ________________________________________________________________________________
     function startGameLoop() {
       clearInterval(gameInterval);
       gameInterval = setInterval(() => {
+        direction = nextDirection;
         moveSnake();
         if (checkCollision()) {
           endGame(false);
@@ -233,51 +245,13 @@ ________________________________________________________________________________
       snake.forEach((segment, index) => {
         const intensity = 255 - (index * (255 / snake.length));
         ctx.fillStyle = `rgb(0, 0, ${intensity})`;
-        ctx.fillRect(segment.x * tileSize, segment.y * tileSize, tileSize, tileSize);
-      });
-      ctx.fillStyle = '#D84315';
-      ctx.fillRect(food.x * tileSize + 2, food.y * tileSize + 2, tileSize - 4, tileSize - 4);
-    }
-
-    function endGame(isVictory) {
-      gameRunning = false;
-      clearInterval(gameInterval);
-      canvas.style.display = 'none';
-      if (isVictory) {
-        victoryScreen.classList.add('active');
-      } else {
-        gameOverScreen.classList.add('active');
-      }
-    }
-
-    function changeDirection(event) {
-      if (!gameRunning) return;
-      const key = event.key.toUpperCase();
-      if (key === 'W' && direction !== 'DOWN') direction = 'UP';
-      if (key === 'S' && direction !== 'UP') direction = 'DOWN';
-      if (key === 'A' && direction !== 'RIGHT') direction = 'LEFT';
-      if (key === 'D' && direction !== 'LEFT') direction = 'RIGHT';
-    }
-
-    function returnToHome() {
-      canvas.style.display = 'none';
-      homeScreen.classList.add('active');
-      gameOverScreen.classList.remove('active');
-      victoryScreen.classList.remove('active');
-    }
-
-    startBtn.addEventListener('click', initializeGame);
-    restartBtn.addEventListener('click', initializeGame);
-    restartBtnVictory.addEventListener('click', initializeGame);
-    backHomeBtn1.addEventListener('click', returnToHome);
-    backHomeBtn2.addEventListener('click', returnToHome);
-    document.addEventListener('keydown', changeDirection);
-    window.addEventListener('keydown', (event) => {
-      if (event.key === ' ' && !gameRunning) initializeGame();
-    });
-  </script>
-</body>
-</html>
+        ctx.fillRect(segment.x * tileSize + 2, segment.y * tileSize + 2, tileSize - 4, tileSize - 4);
+        if (index === 0) {
+          // Draw eyes on the head
+          ctx.fillStyle = 'white';
+          ctx.beginPath();
+          ctx.arc((segment.x + 0.3) * tileSize, (segment.y + 0.3) * tileSize, tileSize / 8, 0, 2 * Math.PI);
+          ctx.arc((segment.x
 
 
 
