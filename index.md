@@ -367,24 +367,22 @@ permalink: /snake/
         }
         /* Random food placement */
         /////////////////////////////////////////////////////////////
-        
-                    addFood();
 
+            
+        let addFood = function() {
+            food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
+            food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
+            for (let i = 0; i < snake.length; i++) {
+                 if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
+                     addFood(); // If food overlaps snake, reposition it
+                }
+            }
 
-                    let addFood = function() {
-    food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
-    food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
-    for (let i = 0; i < snake.length; i++) {
-        if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
-            addFood(); // If food overlaps snake, reposition it
-        }
-    }
-
-    // Generate a random color for the food
-    const randomColor = getRandomColor();
-    ctx.fillStyle = randomColor;
-    activeDot(food.x, food.y); // Paint the food with the new color
-};
+         // Generate a random color for the food
+            const randomColor = getRandomColor();
+            ctx.fillStyle = randomColor;
+                activeDot(food.x, food.y); // Paint the food with the new color
+        };
 
 // Helper function to generate random colors
 function getRandomColor() {
@@ -396,9 +394,6 @@ function getRandomColor() {
     return color;
 }
 
-                }
-            }
-        }
         /* Collision Detection */
         /////////////////////////////////////////////////////////////
         let checkBlock = function(x, y, _x, _y){
