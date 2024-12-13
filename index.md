@@ -251,7 +251,7 @@ permalink: /snake/
             let _x = snake[0].x;
             let _y = snake[0].y;
             snake_dir = snake_next_dir;   // read async event key
-            // Direction 0 - w, 1 - d, 2 - s, 3 - a
+            // Direction 0 - Up, 1 - Right, 2 - Down, 3 - Left
             switch(snake_dir){
                 case 0: _y--; break;
                 case 1: _x++; break;
@@ -314,7 +314,6 @@ permalink: /snake/
             // Recursive call after speed delay, déjà vu
             setTimeout(mainLoop, snake_speed);
         }
-
         
         /* New Game setup */
         /////////////////////////////////////////////////////////////
@@ -368,12 +367,35 @@ permalink: /snake/
         }
         /* Random food placement */
         /////////////////////////////////////////////////////////////
-        let addFood = function(){
-            food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
-            food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
-            for(let i = 0; i < snake.length; i++){
-                if(checkBlock(food.x, food.y, snake[i].x, snake[i].y)){
+        
                     addFood();
+
+
+                    let addFood = function() {
+    food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
+    food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
+    for (let i = 0; i < snake.length; i++) {
+        if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
+            addFood(); // If food overlaps snake, reposition it
+        }
+    }
+
+    // Generate a random color for the food
+    const randomColor = getRandomColor();
+    ctx.fillStyle = randomColor;
+    activeDot(food.x, food.y); // Paint the food with the new color
+};
+
+// Helper function to generate random colors
+function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
                 }
             }
         }
