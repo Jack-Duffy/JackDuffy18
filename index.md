@@ -251,7 +251,7 @@ permalink: /snake/
             let _x = snake[0].x;
             let _y = snake[0].y;
             snake_dir = snake_next_dir;   // read async event key
-            // Direction 0 - Up, 1 - Right, 2 - Down, 3 - Left
+            // Direction 0 - w, 1 - d, 2 - s, 3 - a
             switch(snake_dir){
                 case 0: _y--; break;
                 case 1: _x++; break;
@@ -309,33 +309,13 @@ permalink: /snake/
             }
             // Paint food
             activeDot(food.x, food.y);
-
-            function placeApple() {
-    apple.x = Math.floor(Math.random() * gridSize);
-    apple.y = Math.floor(Math.random() * gridSize);
-
-    // Change the apple's color
-    const appleElement = document.querySelector('.apple');
-    if (appleElement) {
-        appleElement.style.backgroundColor = getRandomColor();
-    }
-}
-
             // Debug
             //document.getElementById("debug").innerHTML = snake_dir + " " + snake_next_dir + " " + snake[0].x + " " + snake[0].y;
             // Recursive call after speed delay, déjà vu
             setTimeout(mainLoop, snake_speed);
         }
 
-        function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
+        
         /* New Game setup */
         /////////////////////////////////////////////////////////////
         let newGame = function(){
