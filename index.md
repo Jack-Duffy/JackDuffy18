@@ -260,32 +260,6 @@ permalink: /snake/
             }
         }
 
-        /* Random Food Placement and Logic */
-        /////////////////////////////////////////////////////////////
-        let addFood = function(){
-            food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
-            food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
-            for (let i = 0; i < snake.length; i++) {
-                if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
-                    addFood();  // Reposition food if it overlaps snake
-                    return;
-                }
-            }
-
-            // Generate a random color for the food
-            food.color = getRandomColor();
-        }
-
-        // Helper function to generate a random color
-        let getRandomColor = function(){
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++){
-                color += letters[Math.floor(Math.random() * 16)];
-                return color;
-            }
-            
-        }
 
         /* Key Input Logic */
         /////////////////////////////////////////////////////////////
