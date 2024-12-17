@@ -96,7 +96,7 @@ permalink: /snake/
     }
 
     #setting input:checked + label{
-        background-color: #FFF;
+        background-color: #30aa16;
         color: #000;
     }
 </style>
@@ -382,17 +382,17 @@ permalink: /snake/
             const randomColor = getRandomColor();
             ctx.fillStyle = randomColor;
                 activeDot(food.x, food.y); // Paint the food with the new color
-        };
+    
 
-// Helper function to generate random colors
-function getRandomColor() {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+       // Helper function to generate random colors
+        function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+          for (let i = 0; i < 6; i++) {
+         color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-}
+        };
 
         /* Collision Detection */
         /////////////////////////////////////////////////////////////
