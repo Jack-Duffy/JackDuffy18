@@ -318,7 +318,7 @@ permalink: /snake/
             //document.getElementById("debug").innerHTML = snake_dir + " " + snake_next_dir + " " + snake[0].x + " " + snake[0].y;
             // Recursive call after speed delay, déjà vu
             setTimeout(mainLoop, snake_speed);
-        }
+        };
         
         /* New Game setup */
         /////////////////////////////////////////////////////////////
