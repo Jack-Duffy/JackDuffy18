@@ -229,8 +229,8 @@ permalink: /snake/
         }, true);
     };
 })();
-</script>
-        /* Snake Collision Detection */
+       
+        //* Snake Collision Detection */
         /////////////////////////////////////////////////////////////
         let checkBlock = function(x, y, _x, _y){
             return (x === _x && y === _y);
