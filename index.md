@@ -96,7 +96,7 @@ permalink: /snake/
     }
 
     #setting input:checked + label{
-        background-color: #30aa16;
+        background-color: #FFF;
         color: #000;
     }
 </style>
@@ -120,7 +120,7 @@ permalink: /snake/
             <a id="setting_menu1" class="link-alert">settings</a>
         </div>
         <!-- Play Screen -->
-        <canvas id="snake" class="wrap" width="320" height="320" tabindex="1"></canvas>
+        <canvas id="snake" class="wrap" width="640" height="640" tabindex="1"></canvas>
         <!-- Settings Screen -->
         <div id="setting" class="py-4 text-light">
             <p>Settings Screen, press <span style="background-color: #FFFFFF; color: #000000">space</span> to go back to playing</p>
@@ -307,8 +307,13 @@ permalink: /snake/
             for(let i = 0; i < snake.length; i++){
                 activeDot(snake[i].x, snake[i].y);
             }
-            // Paint food
-            activeDot(food.x, food.y);
+            // Paint food with random color
+            ctx.fillStyle = food.color;  // Use random color stored in food object
+             activeDot(food.x, food.y);
+
+        }
+
+
             // Debug
             //document.getElementById("debug").innerHTML = snake_dir + " " + snake_next_dir + " " + snake[0].x + " " + snake[0].y;
             // Recursive call after speed delay, déjà vu
@@ -375,24 +380,24 @@ permalink: /snake/
             for (let i = 0; i < snake.length; i++) {
                  if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
                      addFood(); // If food overlaps snake, reposition it
+                     return;
                 }
             }
 
          // Generate a random color for the food
-            const randomColor = getRandomColor();
-            ctx.fillStyle = randomColor;
-                activeDot(food.x, food.y); // Paint the food with the new color
-    
+         food.color = getRandomColor();
 
-       // Helper function to generate random colors
+        // Helper function to generate random colors
         function getRandomColor() {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-          for (let i = 0; i < 6; i++) {
-         color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-        };
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+             return color;
+        }
+       
+    };
 
         /* Collision Detection */
         /////////////////////////////////////////////////////////////
