@@ -341,11 +341,11 @@ permalink: /snake/
         let changeDir = function(key){
             // test key and switch direction
             switch(key) {
-                case 37:    // 'A' Key
+                case 65:    // 'A' Key
                     if (snake_dir !== 1)    // not right
                         snake_next_dir = 3; // then switch left
                     break;
-                case 38:    // 'W' Key
+                case 87:    // 'W' Key
                     if (snake_dir !== 2)    // not down
                         snake_next_dir = 0; // then switch up
                     break;
