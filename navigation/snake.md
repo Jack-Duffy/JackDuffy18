@@ -5,7 +5,6 @@ permalink: /snake/
 ---
 
 <style>
-
     body{
     }
     .wrap{
@@ -326,6 +325,10 @@ permalink: /snake/
             }
         }
 
+
+        // Constants for Image Size
+        const IMAGE_SIZE = 10;
+
         // Load Images
         const snakeImage = new Image();
         snakeImage.src = '<images/IMG_5269 copy.JPG>';
@@ -337,13 +340,16 @@ permalink: /snake/
         /////////////////////////////////////////////////////////////
         let activeDot = function(x, y, type = 'snake') {
             if (type === 'snake') {
+                
         // Draw snake part
-        ctx.drawImage(snakeImage, x * BLOCK, y * BLOCK, BLOCK, BLOCK);
-    }        else if (type === 'apple') {
-        // Draw apple
-        ctx.drawImage(appleImage, x * BLOCK, y * BLOCK, BLOCK, BLOCK);
+                ctx.drawImage(snakeImage, x * BLOCK, y * BLOCK, IMAGE_SIZE, IMAGE_SIZE);
+    } else if (type === "apple") {
+
+        
+       // Draw apple
+        ctx.drawImage(appleImage, x * BLOCK, y * BLOCK, IMAGE_SIZE, IMAGE_SIZE);
     }
-  };
+};
         }
         /* Random food placement */
         /////////////////////////////////////////////////////////////
