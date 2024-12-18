@@ -387,5 +387,5 @@ permalink: /snake/
                 screen_snake.style.borderColor = "#606060";}
             if(wall === 1){screen_snake.style.borderColor = "#5ed627";}
         }
-    })();
+    )();
 </script>
