@@ -51,7 +51,7 @@ permalink: /snake/
         display: none;
         border-style: solid;
         border-width: 10px;
-        border-color: green;
+        border-color: #5ed627;
     }
     canvas:focus{
         outline: none;
@@ -399,7 +399,7 @@ permalink: /snake/
             wall = wall_value;
             if(wall === 0){
                 screen_snake.style.borderColor = "#606060";}
-            if(wall === 1){screen_snake.style.borderColor = "#green";}
+            if(wall === 1){screen_snake.style.borderColor = "#5ed627";}
         }
     })();
 </script>
