@@ -334,15 +334,15 @@ permalink: /snake/
         /* Random food placement */
         /////////////////////////////////////////////////////////////
         let addFood = function() {
-    food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
-    food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
-    for (let i = 0; i < snake.length; i++) {
-        if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
-            addFood();
+            food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
+            food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
+            for (let i = 0; i < snake.length; i++) {
+                if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
+                addFood();
+            }
         }
-    }
-    activeDot(food.x, food.y, true); // Draw food in red
-};
+        activeDot(food.x, food.y, true); // Draw food in red
+    };
 
         /* Collision Detection */
         /////////////////////////////////////////////////////////////
