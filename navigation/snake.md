@@ -268,7 +268,7 @@ permalink: /snake/
             }
             // Repaint canvas
             ctx.beginPath();
-            ctx.fillStyle = "royalblue";
+            ctx.fillStyle = "#90EE90"; // Light Green
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             // Paint snake
             for(let i = 0; i < snake.length; i++){
@@ -307,19 +307,19 @@ permalink: /snake/
         let changeDir = function(key){
             // test key and switch direction
             switch(key) {
-                case 37:    // left arrow
+                 case 65: // 'A' key
                     if (snake_dir !== 1)    // not right
                         snake_next_dir = 3; // then switch left
                     break;
-                case 38:    // up arrow
+                case 87: // 'W' key
                     if (snake_dir !== 2)    // not down
                         snake_next_dir = 0; // then switch up
                     break;
-                case 39:    // right arrow
+               case 68: // 'D' key
                     if (snake_dir !== 3)    // not left
                         snake_next_dir = 1; // then switch right
                     break;
-                case 40:    // down arrow
+                case 83: // 'S' key
                     if (snake_dir !== 0)    // not up
                         snake_next_dir = 2; // then switch down
                     break;
@@ -328,20 +328,21 @@ permalink: /snake/
         /* Dot for Food or Snake part */
         /////////////////////////////////////////////////////////////
         let activeDot = function(x, y){
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
+              ctx.fillStyle = isFood ? "#FF0000" : "#0000FF"; // Red for food, Blue for snake
+              ctx.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
         }
         /* Random food placement */
         /////////////////////////////////////////////////////////////
-        let addFood = function(){
+        let addFood = function() {
             food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
-            food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
-            for(let i = 0; i < snake.length; i++){
-                if(checkBlock(food.x, food.y, snake[i].x, snake[i].y)){
-                    addFood();
-                }
-            }
+             food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
+            for (let i = 0; i < snake.length; i++) {
+            if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
+            addFood();
         }
+    }
+    activeDot(food.x, food.y, true); // Draw food in red
+
         /* Collision Detection */
         /////////////////////////////////////////////////////////////
         let checkBlock = function(x, y, _x, _y){
@@ -363,8 +364,11 @@ permalink: /snake/
         /////////////////////////////////////////////////////////////
         let setWall = function(wall_value){
             wall = wall_value;
-            if(wall === 0){screen_snake.style.borderColor = "#606060";}
-            if(wall === 1){screen_snake.style.borderColor = "#FFFFFF";}
-        }
-    })();
+    if (wall === 0) {
+        screen_snake.style.borderColor = "#006400"; // Dark Green
+    }
+    if (wall === 1) {
+        screen_snake.style.borderColor = "#006400"; // Dark Green
+    }
+};
 </script>
