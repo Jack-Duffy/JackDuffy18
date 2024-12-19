@@ -281,36 +281,27 @@ permalink: /snake/
             // Recursive call after speed delay, déjà vu
             setTimeout(mainLoop, snake_speed);
         }
-            /* New Game setup */
-            /////////////////////////////////////////////////////////////
-            let newGame = function () {
-                // Reset game state
-                snake = [{ x: 0, y: 15 }]; // Start snake at initial position
-                snake_next_dir = 1; // Initial direction is right
-                score = 0; // Reset score
-                altScore(score); // Update score display
-                addFood(); // Generate initial food
-
-            // Apply current settings
-                for (let i = 0; i < speed_setting.length; i++) {
-                if (speed_setting[i].checked) {
-                    setSnakeSpeed(speed_setting[i].value);
+        /* New Game setup */
+        /////////////////////////////////////////////////////////////
+        let newGame = function(){
+            // snake game screen
+            showScreen(SCREEN_SNAKE);
+            screen_snake.focus();
+            // game score to zero
+            score = 0;
+            altScore(score);
+            // initial snake
+            snake = [];
+            snake.push({x: 0, y: 15});
+            snake_next_dir = 1;
+            // food on canvas
+            addFood();
+            // activate canvas event
+            canvas.onkeydown = function(evt) {
+                changeDir(evt.keyCode);
             }
-     }
-    for (let i = 0; i < wall_setting.length; i++) {
-        if (wall_setting[i].checked) {
-            setWall(wall_setting[i].value);
+            mainLoop();
         }
-    }
-
-        // Show the game screen
-        showScreen(SCREEN_SNAKE);
-        screen_snake.focus(); // Ensure canvas is focused for key input
-
-        // Start the game loop
-         mainLoop();
-    };
-
         /* Key Inputs and Actions */
         /////////////////////////////////////////////////////////////
         let changeDir = function(key){
@@ -342,15 +333,16 @@ permalink: /snake/
         }
         /* Random food placement */
         /////////////////////////////////////////////////////////////
-        let addFood = function(){
+        let addFood = function() {
             food.x = Math.floor(Math.random() * ((canvas.width / BLOCK) - 1));
             food.y = Math.floor(Math.random() * ((canvas.height / BLOCK) - 1));
-            for(let i = 0; i < snake.length; i++){
-                if(checkBlock(food.x, food.y, snake[i].x, snake[i].y)){
-                    addFood();
-                }
-            }
+            for (let i = 0; i < snake.length; i++) {
+                if (checkBlock(food.x, food.y, snake[i].x, snake[i].y)) {
+                addFood();
+             }
         }
+        activeDot(food.x, food.y, true); // Draw food in red
+    };
 
         /* Collision Detection */
         /////////////////////////////////////////////////////////////
