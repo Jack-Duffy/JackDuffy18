@@ -152,25 +152,71 @@ function generateFood() {
   food.color = colors[Math.floor(Math.random() * colors.length)];
 }
 
+/* Initialize Game */
+function initializeGame() {
+  snake = [{ x: 200, y: 200 }];
+  direction = { x: 0, y: 0 };
+  nextDirection = { x: 0, y: 0 };
+  score = 0;
+  currentScoreDisplay.textContent = score;
+  frameCount = 0;
+  generateFood();
+  showScreen(SCREEN_SNAKE);
+  requestAnimationFrame(gameLoop);
+}
+
+/* Game Loop */
+function gameLoop() {
+  frameCount++;
+  if (frameCount >= gameSpeed) {
+    frameCount = 0;
+
+    // Update direction
+    if ((nextDirection.x !== -direction.x || nextDirection.y !== -direction.y)) {
+      direction = nextDirection;
+    }
+
+    // Move the snake
+    const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+    snake.unshift(head);
+
+    // Check food collision
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      currentScoreDisplay.textContent = score;
+      generateFood();
+    } else {
+      snake.pop();
+    }
+
+    // Check wall collisions
+    if (
+      wallCollision &&
+      (head.x < 0 || head.y < 0 || head.x >= canvas.width || head.y >= canvas.height)
+    ) {
+      endGame();
+      return;
+    }
+
+    // Check self-collision
+    if (snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+      endGame();
+      return;
+    }
+  }
+
+  // Render game
+  renderGame();
+  requestAnimationFrame(gameLoop);
+}
+
 /* Render Game */
 function renderGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw checkered background
-  for (let x = 0; x < canvas.width; x += 20) {
-    for (let y = 0; y < canvas.height; y += 20) {
-      ctx.fillStyle = (x / 20 + y / 20) % 2 === 0 ? "lightgreen" : "green";
-      ctx.fillRect(x, y, 20, 20);
-    }
-  }
-
   // Draw food
   ctx.fillStyle = food.color;
   ctx.fillRect(food.x, food.y, 20, 20);
-
-  // Draw food stem
-  ctx.fillStyle = "brown";
-  ctx.fillRect(food.x + 7, food.y - 5, 6, 5);
 
   // Draw snake
   snake.forEach((segment, index) => {
@@ -185,4 +231,31 @@ function renderGame() {
     }
   });
 }
+
+/* End Game */
+function endGame() {
+  if (score > highScore) highScore = score;
+  scoreDisplay.textContent = score;
+  highScoreDisplay.textContent = highScore;
+  showScreen(SCREEN_GAME_OVER);
+}
+
+/* Input Handling */
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowUp" || e.key === "w") nextDirection = { x: 0, y: -20 };
+  if (e.key === "ArrowDown" || e.key === "s") nextDirection = { x: 0, y: 20 };
+  if (e.key === "ArrowLeft" || e.key === "a") nextDirection = { x: -20, y: 0 };
+  if (e.key === "ArrowRight" || e.key === "d") nextDirection = { x: 20, y: 0 };
+});
+
+/* Button Events */
+startButtons.forEach(button => button.addEventListener("click", initializeGame));
+settingsButtons.forEach(button => button.addEventListener("click", () => showScreen(SCREEN_SETTING)));
+backButton.addEventListener("click", () => showScreen(SCREEN_MENU));
+document.getElementsByName("wall").forEach(input =>
+  input.addEventListener("change", () => (wallCollision = input.value === "true"))
+);
+document.getElementsByName("speed").forEach(input =>
+  input.addEventListener("change", () => (gameSpeed = 200 / input.value))
+);
 </script>
