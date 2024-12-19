@@ -25,5 +25,6 @@ header_pages:
   - navigation/search.md
   - navigation/about.md
   - navigation/snake.md
+  - navigation/backup.md
   - README4YML.md
 
