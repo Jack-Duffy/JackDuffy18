@@ -45,7 +45,7 @@ permalink: /snake/
       font-size: 16px;
       background: none;
       border: none;
-      color: blue;
+      color: #0047ab;
       text-decoration: underline;
       cursor: pointer;
     }
@@ -54,6 +54,11 @@ permalink: /snake/
     }
     #setting, #gameover {
       display: none;
+    }
+    #score_display {
+      font-size: 18px;
+      margin: 10px;
+      color: #333;
     }
   </style>
 </head>
@@ -87,6 +92,7 @@ permalink: /snake/
     <button id="new_game2">Play Again</button>
     <button id="setting_menu1">Settings</button>
   </div>
+  <div id="score_display">Score: <span id="current_score">0</span></div>
   <canvas id="snake" width="400" height="400"></canvas>
 </body>
 
@@ -102,6 +108,7 @@ const SCREEN_MENU = -1, SCREEN_SNAKE = 0, SCREEN_GAME_OVER = 1, SCREEN_SETTING =
 const menuScreen = document.getElementById("menu");
 const settingScreen = document.getElementById("setting");
 const gameOverScreen = document.getElementById("gameover");
+const currentScoreDisplay = document.getElementById("current_score");
 const scoreDisplay = document.getElementById("score_value");
 const highScoreDisplay = document.getElementById("high_score_value");
 
@@ -131,6 +138,7 @@ function showScreen(screen) {
   settingScreen.style.display = screen === SCREEN_SETTING ? "block" : "none";
   gameOverScreen.style.display = screen === SCREEN_GAME_OVER ? "block" : "none";
   canvas.style.display = screen === SCREEN_SNAKE ? "block" : "none";
+  document.getElementById("score_display").style.display = screen === SCREEN_SNAKE ? "block" : "none";
 }
 
 function generateFood() {
@@ -151,6 +159,7 @@ function initializeGame() {
   direction = { x: 0, y: 0 };
   nextDirection = { x: 0, y: 0 };
   score = 0;
+  currentScoreDisplay.textContent = score;
   frameCount = 0;
   generateFood();
   showScreen(SCREEN_SNAKE);
@@ -175,6 +184,7 @@ function gameLoop() {
     // Check food collision
     if (head.x === food.x && head.y === food.y) {
       score++;
+      currentScoreDisplay.textContent = score;
       generateFood();
     } else {
       snake.pop();
@@ -239,11 +249,14 @@ document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight" || e.key === "d") nextDirection = { x: 20, y: 0 };
 });
 
-/* Event Listeners */
-startButtons.forEach(button => button.onclick = initializeGame);
-settingsButtons.forEach(button => button.onclick = () => showScreen(SCREEN_SETTING));
-backButton.onclick = () => showScreen(SCREEN_MENU);
-
-/* Default Screen */
-showScreen(SCREEN_MENU);
+/* Button Events */
+startButtons.forEach(button => button.addEventListener("click", initializeGame));
+settingsButtons.forEach(button => button.addEventListener("click", () => showScreen(SCREEN_SETTING)));
+backButton.addEventListener("click", () => showScreen(SCREEN_MENU));
+document.getElementsByName("wall").forEach(input =>
+  input.addEventListener("change", () => (wallCollision = input.value === "true"))
+);
+document.getElementsByName("speed").forEach(input =>
+  input.addEventListener("change", () => (gameSpeed = 200 / input.value))
+);
 </script>
