@@ -4,23 +4,9 @@ title: Snake
 permalink: /snake/
 ---
 
-# Snake Game
-
-This is a complete Snake game implementation. Copy the following code into `snake.md` and view it via a Git.io link or in a Markdown renderer that supports inline HTML, CSS, and JavaScript.
-
-# Snake Game Code
-
-Copy the following code blocks into a single `snake.md` file.
 
 ---
 
-# Snake Game Code
-
-Copy and paste the following sections into your `snake.md` file.
-
----
-
-## Part 1: HTML and CSS
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -123,7 +109,8 @@ const gameOverScreen = document.getElementById("gameover");
 const scoreDisplay = document.getElementById("score_value");
 
 // Buttons
-const startButtons = [document.getElementById("new_game"), document.getElementById("new_game1"), document.getElementById("new_game2")];
+const startButtons = [document.getElementById("new_game"), document.getElementById("new_game1"), document.
+getElementById("new_game2")];
 const settingsButton = document.getElementById("setting_menu");
 
 // Game Settings
