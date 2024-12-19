@@ -281,35 +281,35 @@ permalink: /snake/
             // Recursive call after speed delay, déjà vu
             setTimeout(mainLoop, snake_speed);
         }
-        /* New Game setup */
-        /////////////////////////////////////////////////////////////
-        let newGame = function () {
-        // Reset game state
-        snake = [{ x: 0, y: 15 }]; // Start snake at initial position
-        snake_next_dir = 1; // Initial direction is right
-        score = 0; // Reset score
-        altScore(score); // Update score display
-        addFood(); // Generate initial food
+            /* New Game setup */
+            /////////////////////////////////////////////////////////////
+            let newGame = function () {
+                // Reset game state
+                snake = [{ x: 0, y: 15 }]; // Start snake at initial position
+                snake_next_dir = 1; // Initial direction is right
+                score = 0; // Reset score
+                altScore(score); // Update score display
+                addFood(); // Generate initial food
 
-        // Apply current settings
-        for (let i = 0; i < speed_setting.length; i++) {
-        if (speed_setting[i].checked) {
-            setSnakeSpeed(speed_setting[i].value);
-        }
-    }
+            // Apply current settings
+                for (let i = 0; i < speed_setting.length; i++) {
+                if (speed_setting[i].checked) {
+                    setSnakeSpeed(speed_setting[i].value);
+            }
+     }
     for (let i = 0; i < wall_setting.length; i++) {
         if (wall_setting[i].checked) {
             setWall(wall_setting[i].value);
         }
     }
 
-    // Show the game screen
-    showScreen(SCREEN_SNAKE);
-    screen_snake.focus(); // Ensure canvas is focused for key input
+        // Show the game screen
+        showScreen(SCREEN_SNAKE);
+        screen_snake.focus(); // Ensure canvas is focused for key input
 
         // Start the game loop
          mainLoop();
-        };
+    };
 
         /* Key Inputs and Actions */
         /////////////////////////////////////////////////////////////
