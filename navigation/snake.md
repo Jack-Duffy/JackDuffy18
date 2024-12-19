@@ -41,12 +41,23 @@ permalink: /snake/
     }
     button {
       margin: 10px;
-      padding: 10px 20px;
       font-size: 16px;
+      background: none;
+      border: none;
+      color: #0047ab;
+      text-decoration: underline;
       cursor: pointer;
+    }
+    button:hover {
+      text-decoration: none;
     }
     #setting, #gameover {
       display: none;
+    }
+    #score_display {
+      font-size: 18px;
+      margin: 10px;
+      color: #333;
     }
   </style>
 </head>
@@ -71,61 +82,18 @@ permalink: /snake/
     </label>
     <br>
     <button id="new_game1">Start Game</button>
+    <button id="back_to_menu">Back to Menu</button>
   </div>
   <div id="gameover">
     <h3>Game Over</h3>
     <p>Score: <span id="score_value">0</span></p>
+    <p>High Score: <span id="high_score_value">0</span></p>
     <button id="new_game2">Play Again</button>
+    <button id="setting_menu1">Settings</button>
   </div>
+  <div id="score_display">Score: <span id="current_score">0</span></div>
   <canvas id="snake" width="400" height="400"></canvas>
 </body>
-
-<script>
-/* Game Attributes */
-/////////////////////////////////////////////////////////////
-// Canvas & Context
-const canvas = document.getElementById("snake");
-const ctx = canvas.getContext("2d");
-
-// HTML Elements
-const SCREEN_MENU = -1, SCREEN_SNAKE = 0, SCREEN_GAME_OVER = 1, SCREEN_SETTING = 2;
-const menuScreen = document.getElementById("menu");
-const settingScreen = document.getElementById("setting");
-const gameOverScreen = document.getElementById("gameover");
-const scoreDisplay = document.getElementById("score_value");
-
-// Buttons
-const startButtons = [document.getElementById("new_game"), document.getElementById("new_game1"), document.getElementById("new_game2")];
-const settingsButton = document.getElementById("setting_menu");
-
-// Game Settings
-let wallCollision = true;
-let speed = 200;
-
-// Game State
-let snake = [];
-let direction = { x: 0, y: 0 };
-let nextDirection = { x: 0, y: 0 };
-let food = { x: 0, y: 0, color: "red" };
-let score = 0;
-let frameInterval = 16;
-let gameSpeed = 10; // Frames between updates
-let frameCount = 0;
-
-// Utility Functions
-function showScreen(screen) {
-  menuScreen.style.display = screen === SCREEN_MENU ? "block" : "none";
-  settingScreen.style.display = screen === SCREEN_SETTING ? "block" : "none";
-  gameOverScreen.style.display = screen === SCREEN_GAME_OVER ? "block" : "none";
-  canvas.style.display = screen === SCREEN_SNAKE ? "block" : "none";
-}
-
-function generateFood() {
-  const colors = ["red", "orange", "yellow"];
-  food.x = Math.floor(Math.random() * (canvas.width / 20)) * 20;
-  food.y = Math.floor(Math.random() * (canvas.height / 20)) * 20;
-  food.color = colors[Math.floor(Math.random() * colors.length)];
-}
 
 <script>
 /* Game Attributes */
