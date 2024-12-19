@@ -7,7 +7,6 @@ permalink: /snake/
 
 ---
 
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +14,6 @@ permalink: /snake/
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Snake Game</title>
   <style>
-    /* Body Styling */
     body {
       margin: 0;
       display: flex;
@@ -26,8 +24,6 @@ permalink: /snake/
       font-family: Arial, sans-serif;
       background-color: #f0f0f0;
     }
-
-    /* Canvas Styling */
     canvas {
       border: 10px solid darkgreen;
       background: repeating-linear-gradient(
@@ -43,29 +39,22 @@ permalink: /snake/
           green 40px
         );
     }
-
-    /* Buttons Styling */
     button {
       margin: 10px;
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
     }
-
-    /* Hidden Screens */
     #setting, #gameover {
       display: none;
     }
   </style>
 </head>
 <body>
-  <!-- Menu Screen -->
   <div id="menu">
     <button id="new_game">New Game</button>
     <button id="setting_menu">Settings</button>
   </div>
-
-  <!-- Settings Screen -->
   <div id="setting">
     <h3>Settings</h3>
     <label>
@@ -83,17 +72,14 @@ permalink: /snake/
     <br>
     <button id="new_game1">Start Game</button>
   </div>
-
-  <!-- Game Over Screen -->
   <div id="gameover">
     <h3>Game Over</h3>
     <p>Score: <span id="score_value">0</span></p>
     <button id="new_game2">Play Again</button>
   </div>
-
-  <!-- Game Canvas -->
   <canvas id="snake" width="400" height="400"></canvas>
 </body>
+
 <script>
 /* Game Attributes */
 /////////////////////////////////////////////////////////////
@@ -109,8 +95,7 @@ const gameOverScreen = document.getElementById("gameover");
 const scoreDisplay = document.getElementById("score_value");
 
 // Buttons
-const startButtons = [document.getElementById("new_game"), document.getElementById("new_game1"), document.
-getElementById("new_game2")];
+const startButtons = [document.getElementById("new_game"), document.getElementById("new_game1"), document.getElementById("new_game2")];
 const settingsButton = document.getElementById("setting_menu");
 
 // Game Settings
@@ -120,9 +105,12 @@ let speed = 200;
 // Game State
 let snake = [];
 let direction = { x: 0, y: 0 };
+let nextDirection = { x: 0, y: 0 };
 let food = { x: 0, y: 0, color: "red" };
 let score = 0;
-let interval;
+let frameInterval = 16;
+let gameSpeed = 10; // Frames between updates
+let frameCount = 0;
 
 // Utility Functions
 function showScreen(screen) {
@@ -138,45 +126,61 @@ function generateFood() {
   food.y = Math.floor(Math.random() * (canvas.height / 20)) * 20;
   food.color = colors[Math.floor(Math.random() * colors.length)];
 }
+
 /* Initialize Game */
 function initializeGame() {
   snake = [{ x: 200, y: 200 }];
   direction = { x: 0, y: 0 };
+  nextDirection = { x: 0, y: 0 };
   score = 0;
+  frameCount = 0;
   generateFood();
   showScreen(SCREEN_SNAKE);
-  clearInterval(interval);
-  interval = setInterval(gameLoop, speed);
+  requestAnimationFrame(gameLoop);
 }
 
 /* Game Loop */
 function gameLoop() {
-  // Move the snake
-  const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
-  snake.unshift(head);
+  frameCount++;
+  if (frameCount >= gameSpeed) {
+    frameCount = 0;
 
-  // Check food collision
-  if (head.x === food.x && head.y === food.y) {
-    score++;
-    generateFood();
-  } else {
-    snake.pop();
-  }
+    // Update direction
+    if ((nextDirection.x !== -direction.x || nextDirection.y !== -direction.y)) {
+      direction = nextDirection;
+    }
 
-  // Check wall collisions
-  if (wallCollision && (head.x < 0 || head.y < 0 || head.x >= canvas.width || head.y >= canvas.height)) {
-    endGame();
-    return;
-  }
+    // Move the snake
+    const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+    snake.unshift(head);
 
-  // Check self-collision
-  if (snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
-    endGame();
-    return;
+    // Check food collision
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      generateFood();
+    } else {
+      snake.pop();
+    }
+
+    // Check wall collisions
+    if (
+      wallCollision &&
+      (head.x < 0 || head.y < 0 || head.x >= canvas.width || head.y >= canvas.height)
+    ) {
+      endGame();
+      return;
+    }
+
+    // Check self-collision
+    if (snake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+      endGame();
+      return;
+    }
   }
 
   // Render game
   renderGame();
+  requestAnimationFrame(gameLoop);
 }
 
 /* Render Game */
@@ -203,17 +207,16 @@ function renderGame() {
 
 /* End Game */
 function endGame() {
-  clearInterval(interval);
   showScreen(SCREEN_GAME_OVER);
   scoreDisplay.textContent = score;
 }
 
 /* Input Handling */
 document.addEventListener("keydown", e => {
-  if (e.key === "ArrowUp" || e.key === "w") direction = { x: 0, y: -20 };
-  if (e.key === "ArrowDown" || e.key === "s") direction = { x: 0, y: 20 };
-  if (e.key === "ArrowLeft" || e.key === "a") direction = { x: -20, y: 0 };
-  if (e.key === "ArrowRight" || e.key === "d") direction = { x: 20, y: 0 };
+  if (e.key === "ArrowUp" || e.key === "w") nextDirection = { x: 0, y: -20 };
+  if (e.key === "ArrowDown" || e.key === "s") nextDirection = { x: 0, y: 20 };
+  if (e.key === "ArrowLeft" || e.key === "a") nextDirection = { x: -20, y: 0 };
+  if (e.key === "ArrowRight" || e.key === "d") nextDirection = { x: 20, y: 0 };
 });
 
 /* Event Listeners */
