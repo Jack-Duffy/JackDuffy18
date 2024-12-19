@@ -1,7 +1,7 @@
 ---
 layout: base
-title: Snake
-permalink: /snake/
+title: backup
+permalink: /backup/
 ---
 
 
