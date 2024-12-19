@@ -268,7 +268,7 @@ permalink: /snake/
             }
             // Repaint canvas
             ctx.beginPath();
-            ctx.fillStyle = "#a39e8e";
+            ctx.fillStyle = "#90EE90";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             // Paint snake
             for(let i = 0; i < snake.length; i++){
@@ -367,8 +367,8 @@ permalink: /snake/
         /////////////////////////////////////////////////////////////
         let setWall = function(wall_value){
             wall = wall_value;
-            if(wall === 0){screen_snake.style.borderColor = "#006400";}
-            if(wall === 1){screen_snake.style.borderColor = "#006400";}
+            if(wall === 0){screen_snake.style.borderColor = "#a39e8e";}
+            if(wall === 1){screen_snake.style.borderColor = "#a39e8e";}
         }
     })();
 </script>
