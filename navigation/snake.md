@@ -8,6 +8,7 @@ permalink: /snake/
 ---
 
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -41,9 +42,15 @@ permalink: /snake/
     }
     button {
       margin: 10px;
-      padding: 10px 20px;
       font-size: 16px;
+      background: none;
+      border: none;
+      color: blue;
+      text-decoration: underline;
       cursor: pointer;
+    }
+    button:hover {
+      text-decoration: none;
     }
     #setting, #gameover {
       display: none;
@@ -71,11 +78,14 @@ permalink: /snake/
     </label>
     <br>
     <button id="new_game1">Start Game</button>
+    <button id="back_to_menu">Back to Menu</button>
   </div>
   <div id="gameover">
     <h3>Game Over</h3>
     <p>Score: <span id="score_value">0</span></p>
+    <p>High Score: <span id="high_score_value">0</span></p>
     <button id="new_game2">Play Again</button>
+    <button id="setting_menu1">Settings</button>
   </div>
   <canvas id="snake" width="400" height="400"></canvas>
 </body>
@@ -93,10 +103,12 @@ const menuScreen = document.getElementById("menu");
 const settingScreen = document.getElementById("setting");
 const gameOverScreen = document.getElementById("gameover");
 const scoreDisplay = document.getElementById("score_value");
+const highScoreDisplay = document.getElementById("high_score_value");
 
 // Buttons
 const startButtons = [document.getElementById("new_game"), document.getElementById("new_game1"), document.getElementById("new_game2")];
-const settingsButton = document.getElementById("setting_menu");
+const settingsButtons = [document.getElementById("setting_menu"), document.getElementById("setting_menu1")];
+const backButton = document.getElementById("back_to_menu");
 
 // Game Settings
 let wallCollision = true;
@@ -108,6 +120,7 @@ let direction = { x: 0, y: 0 };
 let nextDirection = { x: 0, y: 0 };
 let food = { x: 0, y: 0, color: "red" };
 let score = 0;
+let highScore = 0;
 let frameInterval = 16;
 let gameSpeed = 10; // Frames between updates
 let frameCount = 0;
@@ -122,8 +135,13 @@ function showScreen(screen) {
 
 function generateFood() {
   const colors = ["red", "orange", "yellow"];
-  food.x = Math.floor(Math.random() * (canvas.width / 20)) * 20;
-  food.y = Math.floor(Math.random() * (canvas.height / 20)) * 20;
+  let isOnSnake;
+  do {
+    isOnSnake = false;
+    food.x = Math.floor(Math.random() * (canvas.width / 20)) * 20;
+    food.y = Math.floor(Math.random() * (canvas.height / 20)) * 20;
+    isOnSnake = snake.some(segment => segment.x === food.x && segment.y === food.y);
+  } while (isOnSnake);
   food.color = colors[Math.floor(Math.random() * colors.length)];
 }
 
@@ -207,8 +225,10 @@ function renderGame() {
 
 /* End Game */
 function endGame() {
-  showScreen(SCREEN_GAME_OVER);
+  if (score > highScore) highScore = score;
   scoreDisplay.textContent = score;
+  highScoreDisplay.textContent = highScore;
+  showScreen(SCREEN_GAME_OVER);
 }
 
 /* Input Handling */
@@ -221,7 +241,8 @@ document.addEventListener("keydown", e => {
 
 /* Event Listeners */
 startButtons.forEach(button => button.onclick = initializeGame);
-settingsButton.onclick = () => showScreen(SCREEN_SETTING);
+settingsButtons.forEach(button => button.onclick = () => showScreen(SCREEN_SETTING));
+backButton.onclick = () => showScreen(SCREEN_MENU);
 
 /* Default Screen */
 showScreen(SCREEN_MENU);
