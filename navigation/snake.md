@@ -148,11 +148,11 @@ permalink: /snake/
         
         // Initialize food and snake images
         let foodImage = new Image();
-        foodImage.src = "https://via.placeholder.com/10/ff0000/FFFFFF?text=F";
+        foodImage.src = "https://via.placeholder.com/10x10/FFA500/000000.jpg";
 
         
         let snakeImage = new Image();
-        snakeImage.src = "https://via.placeholder.com/10/00ff00/FFFFFF?text=S";
+        snakeImage.src = "https://via.placeholder.com/10x10/008000/000000.jpg";
 
         // Ensure images are loaded
         foodImage.onload = function() {
