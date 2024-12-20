@@ -145,6 +145,12 @@ permalink: /snake/
         let food = {x: 0, y: 0};
         let score;
         let wall;
+        // food drawing
+        let foodImage = new image();
+        foodImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
+        let foodImage = new image();
+        foodImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
+
         /* Display Control */
         /////////////////////////////////////////////////////////////
         // 0 for the game
@@ -331,9 +337,13 @@ permalink: /snake/
         }
         /* Dot for Food or Snake part */
         /////////////////////////////////////////////////////////////
-        let activeDot = function(x, y){
-            ctx.fillStyle = "#FFFFFF";
-            ctx.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
+        let activeDot = function(x, y isFood = false) {
+            ctx.save();
+
+            if (isFood) {
+            //Render food as image
+            ctx.draeImage(foodimage, x * Block, y * Block, Block, Block);
+            }
         }
         /* Random food placement */
         /////////////////////////////////////////////////////////////
