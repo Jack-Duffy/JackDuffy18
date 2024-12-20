@@ -145,12 +145,22 @@ permalink: /snake/
         let food = {x: 0, y: 0};
         let score;
         let wall;
-        // food drawing
-        let foodImage = new image();
+        
+        // Initialize food and snake images
+        let foodImage = new Image();
         foodImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
-        //snake drawing
-        let snakeImage = new image();
+
+        let snakeImage = new Image();
         snakeImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
+
+        // Ensure images are loaded
+        foodImage.onload = function() {
+            console.log("Food image loaded successfully.");
+        };
+        snakeImage.onload = function() {
+            console.log("Snake image loaded successfully.");
+        };
+
 
         /* Display Control */
         /////////////////////////////////////////////////////////////
@@ -340,12 +350,26 @@ permalink: /snake/
         /////////////////////////////////////////////////////////////
         let activeDot = function(x, y, isFood = false) {
             if (isFood) {
+                // Draw food image
                 ctx.drawImage(foodImage, x * BLOCK, y * BLOCK, BLOCK, BLOCK);
-        } else {
-            ctx.fillStyle = "#ffffff"; // Snake body color
-            ctx.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
-    }
-};
+            } else {
+                // Draw snake block
+                ctx.fillStyle = "#ffffff"; // Snake body color
+                ctx.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
+            }
+        };
+
+            foodImage.onerror = function() {
+                console.error("Failed to load food image.");
+            // Fallback to a default color block
+            foodImage = null;
+        };
+        snakeImage.onerror = function() {
+            console.error("Failed to load snake image.");
+        // Fallback to a default color block
+        snakeImage = null;
+    };
+
         /* Random food placement */
         /////////////////////////////////////////////////////////////
         let addFood = function(){
