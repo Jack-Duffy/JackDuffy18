@@ -149,10 +149,13 @@ permalink: /snake/
         // Initialize food and snake images
         
         let foodImage = new Image();
+        foodImage.crossOrigin = "anonymous";
         foodImage.src = 'https://www.doghealth.com/images/crispy_pumpkin_dog_treat_recipe.jpg';
 
         let snakeImage = new Image();
+        snakeImage.crossOrigin = "anonymous";
         snakeImage.src = 'https://cdn.britannica.com/79/232779-050-6B0411D7/German-Shepherd-dog-Alsatian.jpg';
+
 
         // Ensure images are loaded
         foodImage.onload = function() {
