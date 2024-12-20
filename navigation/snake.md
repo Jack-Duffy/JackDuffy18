@@ -148,10 +148,9 @@ permalink: /snake/
         
         // Initialize food and snake images
         let foodImage = new Image();
-        foodImage.crossOrigin = "anonymous"; // Ensure CORS policy allows access to the image
         foodImage.src = 'images/IMG_5269 copy.JPG';
+        
         let snakeImage = new Image();
-        snakeImage.crossOrigin = "anonymous";
         snakeImage.src = 'images/A_Dog_biscuit.jpg';
 
         // Ensure images are loaded
@@ -171,8 +170,6 @@ permalink: /snake/
             console.error("Failed to load snake image.");
             snakeImage = null; // Fallback to color block if image fails
         };
-
-
 
         /* Display Control */
         /////////////////////////////////////////////////////////////
