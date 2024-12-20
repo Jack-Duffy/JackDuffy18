@@ -161,15 +161,20 @@ permalink: /snake/
             console.log("Snake image loaded successfully.");
         };
 
-        // Handle errors if the images fail to load
+        
+
         foodImage.onerror = function() {
-            console.error("Failed to load food image.");
-            foodImage = null; // Fallback to color block if image fails
+    console.error("Failed to load food image.");
+    // Fallback to a default color block for food
+    
+        foodImage = null; // Optional: You can set a fallback image here if needed.
         };
+
         snakeImage.onerror = function() {
             console.error("Failed to load snake image.");
-            snakeImage = null; // Fallback to color block if image fails
-        };
+        // Fallback to a default color block for the snake
+        snakeImage = null; // Optional: You can set a fallback image here if needed.
+    };
 
         
         /* Display Control */
