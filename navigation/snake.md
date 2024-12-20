@@ -171,6 +171,22 @@ permalink: /snake/
             snakeImage = null; // Fallback to color block if image fails
         };
 
+        // Function to draw snake or food with the correct dimensions
+        let activeDot = function(x, y, isFood = false) {
+            const size = BLOCK;  // Use the BLOCK size to size the images
+    
+            if (isFood && foodImage) {
+                // Draw food image
+                ctx.drawImage(foodImage, x * BLOCK, y * BLOCK, size, size);
+            } else if (snakeImage) {
+                // Draw snake block with image
+                ctx.drawImage(snakeImage, x * BLOCK, y * BLOCK, size, size);
+            } else {
+                // Default snake block when image fails
+                ctx.fillStyle = "#ffffff"; // Snake body color
+                ctx.fillRect(x * BLOCK, y * BLOCK, size, size);
+            }
+        };
         /* Display Control */
         /////////////////////////////////////////////////////////////
         // 0 for the game
