@@ -148,10 +148,10 @@ permalink: /snake/
         
         // Initialize food and snake images
         let foodImage = new Image();
-        foodImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/A_Dog_biscuit.jpg/640px-A_Dog_biscuit.jpg';
+        foodImage.src = "..https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/A_Dog_biscuit.jpg/640px-A_Dog_biscuit.jpg"
         
         let snakeImage = new Image();
-        snakeImage.src = 'https://img.apmcdn.org/1e3bb46a977de7eb95f7615d11a710146a45747a/square/d7818f-20230504-dogrunning-06-1000.jpg';
+        snakeImage.src = "..https://img.apmcdn.org/1e3bb46a977de7eb95f7615d11a710146a45747a/square/d7818f-20230504-dogrunning-06-1000.jpg"
 
         // Ensure images are loaded
         foodImage.onload = function() {
