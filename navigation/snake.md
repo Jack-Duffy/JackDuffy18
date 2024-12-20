@@ -146,45 +146,37 @@ permalink: /snake/
         let score;
         let wall;
         
-        // Ensure you have image URLs for snake and food
-let foodImage = new Image();
-foodImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/A_Dog_biscuit.jpg/640px-A_Dog_biscuit.jpg'; // Replace with actual food image URL
+        // Initialize food and snake images
+        let foodImage = new Image();
+        foodImage.src = '../images/A_Dog_biscuit.jpg';
+        
+        let snakeImage = new Image();
+        snakeImage.src = '../images/Dog Running.jpeg';
 
-let snakeImage = new Image();
-snakeImage.src = 'https://img.apmcdn.org/1e3bb46a977de7eb95f7615d11a710146a45747a/square/d7818f-20230504-dogrunning-06-1000.jpg'; // Replace with actual snake image URL
+        // Ensure images are loaded
+        foodImage.onload = function() {
+            console.log("Food image loaded successfully.");
+        };
+        snakeImage.onload = function() {
+            console.log("Snake image loaded successfully.");
+        };
 
-// Ensure images are loaded before use
-foodImage.onload = function() {
-    console.log("Food image loaded successfully.");
-};
-snakeImage.onload = function() {
-    console.log("Snake image loaded successfully.");
-};
+        
 
-foodImage.onerror = function() {
-    console.error("Failed to load food image.");
-    // Fallback to a default color block for food
-    foodImage = null; // Optional: Set a fallback image if needed
-};
+        foodImage.onerror = function() {
+        console.error("Failed to load food image.");
 
-snakeImage.onerror = function() {
-    console.error("Failed to load snake image.");
-    // Fallback to a default color block for the snake
-    snakeImage = null; // Optional: Set a fallback image if needed
-};
+        // Fallback to a default color block for food
+    
+        foodImage = null; // Optional: You can set a fallback image here if needed.
+        };
 
-// Function to draw the food or snake block
-let activeDot = function(x, y, isFood = false) {
-    if (isFood && foodImage) {
-        ctx.drawImage(foodImage, x * BLOCK, y * BLOCK, BLOCK, BLOCK); // Draw food image
-    } else if (snakeImage) {
-        ctx.drawImage(snakeImage, x * BLOCK, y * BLOCK, BLOCK, BLOCK); // Draw snake image
-    } else {
-        // Fallback in case the images are not loaded, draw a colored block
-        ctx.fillStyle = isFood ? "#ff0000" : "#00ff00"; // Red for food, Green for snake
-        ctx.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
-    }
-
+        snakeImage.onerror = function() {
+            console.error("Failed to load snake image.");
+        // Fallback to a default color block for the snake
+        snakeImage = null; // Optional: You can set a fallback image here if needed.
+    };
+    
         
         /* Display Control */
         /////////////////////////////////////////////////////////////
@@ -316,7 +308,7 @@ let activeDot = function(x, y, isFood = false) {
                 activeDot(snake[i].x, snake[i].y);
             }
             // Paint food
-            activeDot(food.x, food.y);
+            activeDot(food.x, food.y, true);
             // Debug
             //document.getElementById("debug").innerHTML = snake_dir + " " + snake_next_dir + " " + snake[0].x + " " + snake[0].y;
             // Recursive call after speed delay, déjà vu
