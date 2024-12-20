@@ -148,12 +148,11 @@ permalink: /snake/
         
         // Initialize food and snake images
         let foodImage = new Image();
-        foodImage.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Chocolate_chip_cookie.jpg/640px-Chocolate_chip_cookie.jpg";
+        foodImage.src = "https://via.placeholder.com/10/ff0000/FFFFFF?text=F";
 
         
         let snakeImage = new Image();
-        snakeImage.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Green_snake_1.jpg/640px-Green_snake_1.jpg";
-
+        snakeImage.src = "https://via.placeholder.com/10/00ff00/FFFFFF?text=S";
 
         // Ensure images are loaded
         foodImage.onload = function() {
