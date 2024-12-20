@@ -183,7 +183,7 @@ permalink: /snake/
                 ctx.drawImage(snakeImage, x * BLOCK, y * BLOCK, size, size);
             } else {
                 // Default snake block when image fails
-                ctx.fillStyle = "#ffffff"; // Snake body color
+                ctx.fillStyle = "#1972d1"; // Snake body color
                 ctx.fillRect(x * BLOCK, y * BLOCK, size, size);
             }
         };
