@@ -151,7 +151,7 @@ permalink: /snake/
         foodImage.src = '../images/A_Dog_biscuit.jpg';
         
         let snakeImage = new Image();
-        snakeImage.src = '../images/Dog Running.jpeg';
+        snakeImage.src = '../images/dog-running-fast-on-the-sand.jpg';
 
         // Ensure images are loaded
         foodImage.onload = function() {
