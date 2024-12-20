@@ -148,10 +148,10 @@ permalink: /snake/
         
         // Initialize food and snake images
         let foodImage = new Image();
-        foodImage.src = 'images/IMG_5269 copy.JPG';
+        foodImage.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/A_Dog_biscuit.jpg/640px-A_Dog_biscuit.jpg';
         
         let snakeImage = new Image();
-        snakeImage.src = 'images/A_Dog_biscuit.jpg';
+        snakeImage.src = 'https://img.apmcdn.org/1e3bb46a977de7eb95f7615d11a710146a45747a/square/d7818f-20230504-dogrunning-06-1000.jpg';
 
         // Ensure images are loaded
         foodImage.onload = function() {
@@ -183,7 +183,7 @@ permalink: /snake/
                 ctx.drawImage(snakeImage, x * BLOCK, y * BLOCK, size, size);
             } else {
                 // Default snake block when image fails
-                ctx.fillStyle = "#1972d1"; // Snake body color
+                ctx.fillStyle = "#ffffff"; // Snake body color
                 ctx.fillRect(x * BLOCK, y * BLOCK, size, size);
             }
         };
