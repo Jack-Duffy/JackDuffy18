@@ -147,11 +147,13 @@ permalink: /snake/
         let wall;
         
         // Initialize food and snake images
+        
         let foodImage = new Image();
-        foodImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
+        foodImage.src = 'images/IMG_5269 copy.JPG';
 
         let snakeImage = new Image();
-        snakeImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
+        snakeImage.src = 'images/A_Dog_biscuit.jpg';z
+
 
         // Ensure images are loaded
         foodImage.onload = function() {
@@ -369,6 +371,14 @@ permalink: /snake/
         // Fallback to a default color block
         snakeImage = null;
     };
+
+    foodImage.onload = function () {
+        console.log("Food image loaded successfully.");
+    };
+    foodImage.onerror = function () {
+        console.error("Failed to load food image.");
+    };
+
 
         /* Random food placement */
         /////////////////////////////////////////////////////////////
