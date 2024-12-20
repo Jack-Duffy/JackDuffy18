@@ -136,7 +136,7 @@ permalink: /snake/
         const button_setting_menu = document.getElementById("setting_menu");
         const button_setting_menu1 = document.getElementById("setting_menu1");
         // Game Control
-        const BLOCK = 10;   // size of block rendering
+        const BLOCK = 40;   // size of block rendering
         let SCREEN = SCREEN_MENU;
         let snake;
         let snake_dir;
