@@ -149,8 +149,7 @@ permalink: /snake/
         let foodImage = new image();
         foodImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
         //snake drawing
-        let snakeImage = new image();
-        snakeImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
+        
 
         /* Display Control */
         /////////////////////////////////////////////////////////////
