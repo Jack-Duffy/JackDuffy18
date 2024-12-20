@@ -149,7 +149,8 @@ permalink: /snake/
         let foodImage = new image();
         foodImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
         //snake drawing
-        
+        let snakeImage = new image();
+        snakeImage.src = 'https://tlcpetfood.com/wp-content/uploads/2022/01/DogBiscuit-1.png';
 
         /* Display Control */
         /////////////////////////////////////////////////////////////
@@ -338,13 +339,13 @@ permalink: /snake/
         /* Dot for Food or Snake part */
         /////////////////////////////////////////////////////////////
         let activeDot = function(x, y, isFood = false) {
-            ctx.save();
-
             if (isFood) {
-            //Render food as image
-            ctx.drawImage(foodimage, x * Block, y * Block, Block, Block);
-            }
-        }
+                ctx.drawImage(foodImage, x * BLOCK, y * BLOCK, BLOCK, BLOCK);
+        } else {
+            ctx.fillStyle = "#ffffff"; // Snake body color
+            ctx.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
+    }
+};
         /* Random food placement */
         /////////////////////////////////////////////////////////////
         let addFood = function(){
