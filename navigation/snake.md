@@ -171,7 +171,8 @@ permalink: /snake/
         foodImage = null; // Optional: You can set a fallback image here if needed.
         };
 
-
+        snakeImage.onerror = function() {
+            console.error("Failed to load snake image.");
         // Fallback to a default color block for the snake
         snakeImage = null; // Optional: You can set a fallback image here if needed.
     };
